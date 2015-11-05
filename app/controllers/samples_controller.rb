@@ -1,13 +1,22 @@
 class SamplesController < ApplicationController
   def index
-    @sample = Sample.where(query_params).first
+    @year = query_params[:year]
+    @region = query_params[:region]
     respond_to do |format|
       format.html
       format.csv {
-        send_file "#{Rails.root}/#{@sample.sample_path}"
+        if @year && @region
+          send_file Sample.getPath(@region.to_s, @year.to_i, 'csv')
+        else
+          render nothing: true, status: 404
+        end
       }
       format.zip {
-        send_file "#{Rails.root}/#{@sample.sample_zip}"
+        if @year && @region
+          send_file Sample.getPath(@region.to_s, @year.to_i, 'zip')
+        else
+          render nothing: true, status: 404
+        end
       }
     end
   end
