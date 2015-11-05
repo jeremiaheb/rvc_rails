@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'strata/index'
+
   get 'samples/index'
 
   get 'taxa/index'

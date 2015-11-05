@@ -1,0 +1,2 @@
+module StrataHelper
+end
