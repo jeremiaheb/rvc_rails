@@ -7,6 +7,6 @@ class Stratum < ActiveRecord::Base
       when "DRTO" then "dt"
       else raise "unknown region"
     end
-    return "#{Rails.root}/public/data/sample_data/ntot_#{abr}#{year}.#{filetype}"
+    return "#{Rails.root}/public/data/stratum_data/ntot_#{abr}#{year}.#{filetype}"
   end
 end
