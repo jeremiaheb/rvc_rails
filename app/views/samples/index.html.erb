@@ -1,2 +1,21 @@
 <h1>Samples#index</h1>
 <p>Find me in app/views/samples/index.html.erb</p>
+<%= form_tag '/samples.zip',  method: "get",
+target: '_blank' do %>
+  <%= label_tag :year, "Year" %>
+  <%= select_tag :year,
+    options_for_select(
+      @domains.map{
+        |d| [d[:year], d[:year]]
+      }.uniq.sort
+      )%>
+    <%= label_tag :region, "Region" %>
+    <%= select_tag :region,
+      options_for_select(
+      @domains.map{
+        |d| [d[:region], d[:region]]
+      }.uniq.sort
+      )
+     %>
+  <%= submit_tag 'Submit' %>
+<% end %>
