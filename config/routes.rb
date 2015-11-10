@@ -1,9 +1,20 @@
 Rails.application.routes.draw do
+
+  root 'home#index'
+
   get 'strata/index'
+
+  get 'strata' => 'strata#index'
 
   get 'samples/index'
 
+  get 'samples' => 'samples#index'
+
   get 'taxa/index'
+
+  get 'taxa' => 'taxa#index'
+
+  get 'home/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
