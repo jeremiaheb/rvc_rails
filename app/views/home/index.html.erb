@@ -1,9 +1,20 @@
-<%= link_to '<< SEFSC website', 'http://www.sefsc.noaa.gov'%>
-<h2> Welcome to the South Florida Reef Visual Census Data Portal </h3>
+<%= link_to '<< SEFSC Website', 'http://www.sefsc.noaa.gov'%>
+<h3> The Data Portal </h3>
+<p> The Southeast Fisheries Science Center, along with other governmental, academic, and private partners,
+  has been conducting a visual survey of reef fish species in the Florida Keys,
+  since 1978. This survey has since been expanded to include the Dry Tortugas and
+  Southeast Florida Region. All the data from this survey collected since 1999 is
+  now available as spreadsheet files for general use as part of this data portal.
+  To learn more about the history, sampling design, and statistical design of the
+  survey, please read <%= link_to 'http://www.sefsc.noaa.gov/species/fish/FAME%20Pubs/Smith%20et%20al%202011%20Fish%20Res%20RVC%20design.pdf',
+  :target => '_blank' do %>
+  Smith <i>et al.</i> 2011
+  <% end %>.
+</p>
  <h3> Available Data </h3>
  <ol>
    <li> <%= link_to 'Sample Data',  controller: 'samples', action: 'index' %> </br>
-     Diver sampled data, including species counts, lengths (in cm), and
+     Diver sampled data, including: species counts, lengths (in cm), and
      geographic data, such as latitude and longitude in decimal degrees.
    </li>
    <li> <%= link_to 'Stratum Data', controller: 'strata', action: 'index' %> </br>
@@ -21,3 +32,10 @@
      exponential coefficient of the allometric growth equation.
    </li>
  </ol>
+ <h3> RVC Data R package </h3>
+ <p> The Southeast Fisheries Science center has produced an R package to help
+   with accessing and analyzing Reef Visual Census Data. It can be accessed at
+   its <%= link_to 'Github page, here', 'http://www.github.com/harryganz/rvc',
+   :target => '_blank' %>.
+   It can be used to import RVC data into R, and produce commonly used summary statistics
+   such as density, abundance, and biomass. </p>
