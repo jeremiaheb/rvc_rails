@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::MissingFile, :with => :file_not_found
 
   def index(model)
+    @domains = model.domains
     @year = query_params[:year]
     @region = query_params[:region]
     has_params = @year && @region
