@@ -5,27 +5,27 @@
       var domains = $('#domains-data').data('domains');
       var $year = $('#year');
       var $region = $('#region');
+      var $hiddenYear = $('#hidden-year');
+      var $hiddenRegion = $('#hidden-region');
       var $reset = $('#reset-btn');
+      var $download = $('#download-btn');
 
       // Inital regions and years
       var years = domains.map(function(el){return el.year;}).uniq().sort();
       var regions = domains.map(function(el){return el.region;}).uniq().sort();
 
-      // Set initial options
-      setOptions($year, years);
-      setOptions($region, regions);
+      setup();
 
-      // On select, change available years/regions
-      $year.on('change', function(){
-        // Get the current value
-        var val = this.value;
-        // Change the available regions based on selection
-        var availableRegions = domains.filter(function(el){return el.year == val;})
-          .map(function(el){return el.region;}).uniq().sort();
-        // Set the regions
-        setOptions($region, availableRegions);
-      });
+      // Initialize fields
+      function setup(){
+        setOptions($year, years);
+        setOptions($region, regions);
+        $year.prop('disabled', true);
+        $download.prop('disabled', true);
+        $region.prop('disabled', false);
+      }
 
+      // On selecting region, disable region, enable year, and enable download
       $region.on('change', function(){
         // get the current value
         var val = this.value;
@@ -34,20 +34,32 @@
           .map(function(el){return el.year;}).uniq().sort();
         // Set the years
         setOptions($year, availableYears);
+        // Set the value of the hidden region
+        $hiddenRegion.val(val);
+        // Enable years, disable regions
+        $year.prop('disabled', false);
+        $region.prop('disabled', true);
       });
 
-      $reset.click(function(){
-        setOptions($year, years);
-        setOptions($region, regions);
+      $year.on('change', function(){
+        // Set the value of the hidden year
+        $hiddenYear.val(this.value);
+        // Disable years, enable download
+        $year.prop('disabled', true);
+        $download.prop('disabled', false);
       });
 
+      // Reset form
+      $reset.click(setup);
 
     });
     // Set options for select element
     function setOptions(element, values) {
       element.empty();
+      var $option = $('<option value="">&nbsp;</option>');
+      element.append($option);
       values.forEach(function(value){
-        var $option = $("<option></option>")
+          $option = $("<option></option>")
           .attr("value", value)
           .text(value);
         element.append($option);

@@ -1,15 +1,17 @@
 <h3>Sample Data</h3>
 <%= form_tag '/samples',  method: "get",
-target: '_blank' do %>
-  <%= label_tag :year, "Year" %>
-  <%= select_tag :year, id: :year %>
-  <%= label_tag :region, "Region" %>
-  <%= select_tag :region, id: :region %>
-  <%= label_tag :format %>
-  <%= select_tag :format,
-    options_for_select([['zip','zip'], ['csv', 'csv']])
-  %>
-  <%= submit_tag 'Download' %>
+target: '_blank', class: "data-form" do %>
+    <%= label_tag :region, "Region" %>
+    <%= select_tag :region, id: :region %>
+    <%= hidden_field_tag :region, nil, {id: "hidden-region"} %>
+    <%= label_tag :year, "Year" %>
+    <%= select_tag :year, id: :year, value: ""%>
+    <%= hidden_field_tag :year, nil, {id: "hidden-year"} %>
+    <%= label_tag :format %>
+    <%= select_tag :format,
+      options_for_select([['zip','zip'], ['csv', 'csv']])
+    %>
+  <%= submit_tag 'Download', id: "download-btn" %>
 <% end %>
 <%= button_tag 'Reset', id: 'reset-btn' %>
 
