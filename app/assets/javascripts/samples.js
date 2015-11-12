@@ -5,6 +5,8 @@
       var domains = $('#domains-data').data('domains');
       var $year = $('#year');
       var $region = $('#region');
+      var $reset = $('#reset-btn');
+
       // Inital regions and years
       var years = domains.map(function(el){return el.year;}).uniq().sort();
       var regions = domains.map(function(el){return el.region;}).uniq().sort();
@@ -12,7 +14,7 @@
       // Set initial options
       setOptions($year, years);
       setOptions($region, regions);
-      
+
       // On select, change available years/regions
       $year.on('change', function(){
         // Get the current value
@@ -33,6 +35,12 @@
         // Set the years
         setOptions($year, availableYears);
       });
+
+      $reset.click(function(){
+        setOptions($year, years);
+        setOptions($region, regions);
+      });
+
 
     });
     // Set options for select element

@@ -8,6 +8,7 @@ target: '_blank' do %>
   <%= select_tag :region, id: :region %>
   <%= submit_tag 'Submit' %>
 <% end %>
+<%= button_tag 'Reset', id: 'reset-btn' %>
 
 <%= content_tag :div, id: "domains-data", style: {display: 'none'}, data: {domains: @domains} do %>
 <% end %>
