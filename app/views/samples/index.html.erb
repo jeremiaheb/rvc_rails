@@ -3,19 +3,11 @@
 <%= form_tag '/samples.zip',  method: "get",
 target: '_blank' do %>
   <%= label_tag :year, "Year" %>
-  <%= select_tag :year,
-    options_for_select(
-      @domains.map{
-        |d| [d[:year], d[:year]]
-      }.uniq.sort
-      )%>
-    <%= label_tag :region, "Region" %>
-    <%= select_tag :region,
-      options_for_select(
-      @domains.map{
-        |d| [d[:region], d[:region]]
-      }.uniq.sort
-      )
-     %>
+  <%= select_tag :year, id: :year %>
+  <%= label_tag :region, "Region" %>
+  <%= select_tag :region, id: :region %>
   <%= submit_tag 'Submit' %>
+<% end %>
+
+<%= content_tag :div, id: "domains-data", style: {display: 'none'}, data: {domains: @domains} do %>
 <% end %>
