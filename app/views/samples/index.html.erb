@@ -1,4 +1,5 @@
 <h3>Sample Data</h3>
+<%= link_to '<< Data Portal Home', controller: :home, acton: :index %>
 <%= form_tag '/samples',  method: "get",
 target: '_blank', class: "data-form" do %>
     <%= label_tag :region, "Region" %>

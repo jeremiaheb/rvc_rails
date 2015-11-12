@@ -1,2 +1,16 @@
-<h1>Strata#index</h1>
-<p>Find me in app/views/strata/index.html.erb</p>
+<h3>Stratum Data</h3>
+<%= link_to '<< Data Portal Home', controller: :home, acton: :index %>
+<%= form_tag '/strata.csv',  method: "get",
+target: '_blank', class: "data-form" do %>
+    <%= label_tag :region, "Region" %>
+    <%= select_tag :region, id: :region %>
+    <%= hidden_field_tag :region, nil, {id: "hidden-region"} %>
+    <%= label_tag :year, "Year" %>
+    <%= select_tag :year, id: :year, value: ""%>
+    <%= hidden_field_tag :year, nil, {id: "hidden-year"} %>
+  <%= submit_tag 'Download', id: "download-btn" %>
+<% end %>
+<%= button_tag 'Reset', id: 'reset-btn' %>
+
+<%= content_tag :div, id: "domains-data", style: {display: 'none'}, data: {domains: @domains} do %>
+<% end %>

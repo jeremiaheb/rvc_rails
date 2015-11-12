@@ -1,2 +1,6 @@
-<h1>Taxa#index</h1>
-<p>Find me in app/views/taxa/index.html.erb</p>
+<h3>Taxonomic Data</h3>
+<%= link_to '<< Data Portal Home', controller: :home, action: :index %>
+<%= form_tag '/taxa.csv',  method: "get",
+target: '_blank', class: "data-form" do %>
+  <%= submit_tag 'Download' %>
+<% end %>
