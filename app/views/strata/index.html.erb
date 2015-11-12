@@ -1,5 +1,8 @@
-<h3>Stratum Data</h3>
 <%= link_to '<< Data Portal Home', controller: :home, acton: :index %>
+<h3>Stratum Data</h3>
+<p> The number of possible primary sample units per stratum. To download select
+  a year and region, then click download. Available as comma-separated values files (csv).
+</p>
 <%= form_tag '/strata.csv',  method: "get",
 target: '_blank', class: "data-form" do %>
     <%= label_tag :region, "Region" %>
@@ -12,5 +15,18 @@ target: '_blank', class: "data-form" do %>
 <% end %>
 <%= button_tag 'Reset', id: 'reset-btn' %>
 
+<h3>Variables</h3>
+<ol>
+  <li>REGION: A code indicating the region. DRTO: for
+  the Dry Tortugas, FLA KEYS: For the Florida Keys, and SEFCRI: For southeast
+  peninsular Florida.</li>
+  <li>YEAR: A number indicating the calendar year.</li>
+  <li>PROT: A boolean indicating the protected status: 1 - protected, 2 - unprotected.</li>
+  <li>STRAT: A code indicating the stratum. Differs by region.</li>
+  <li>NTOT: The number of possible primary sample units for a given year, region,
+  stratum, and protected status</li>
+  <li>GRID_SIZE: The length (in meters) to a side of a primary sample unit for
+  a given year, region, stratum, and protected status</li>
+</ol>
 <%= content_tag :div, id: "domains-data", style: {display: 'none'}, data: {domains: @domains} do %>
 <% end %>

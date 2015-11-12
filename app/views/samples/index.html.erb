@@ -1,5 +1,8 @@
-<h3>Sample Data</h3>
 <%= link_to '<< Data Portal Home', controller: :home, acton: :index %>
+<h3>Sample Data</h3>
+<p> Diver sample counts for reef fish species. To download, select a region and
+  year, then click download. Available as comma-separated values files (csv)
+in uncompressed form or compressed zip files (reccommended). </p>
 <%= form_tag '/samples',  method: "get",
 target: '_blank', class: "data-form" do %>
     <%= label_tag :region, "Region" %>
@@ -15,6 +18,41 @@ target: '_blank', class: "data-form" do %>
   <%= submit_tag 'Download', id: "download-btn" %>
 <% end %>
 <%= button_tag 'Reset', id: 'reset-btn' %>
-
+<h3>Variables:</h3>
+<ol>
+  <li>PRIMARY_SAMPLE_UNIT: A code indicating the primary sample unit in which this
+    sample was collected.</li>
+  <li>YEAR: A number indicating the calendar year. </li>
+  <li>MONTH: A number indicating the month of the year.</li>
+  <li>DAY: A number indicating the day of the month (EST).</li>
+  <li>STATION_NR: A number indicating the secondary sampling unit within a
+  given primary sample unit.</li>
+  <li>LAT_DEGREES: Latitude of secondary sampling unit in decimal degrees.</li>
+  <li>LON_DEGREES: Longitude of secondary sampling unit in decimal degrees.</li>
+  <li>DEPTH: Average depth, in meters, of secondary sampling unit.</li>
+  <li>UNDERWATER_VISIBILITY: Visibility, in meters, at secondary sampling unit.</li>
+  <li>MAPGRID_NR: A number indicating the primary sample unit.</li>
+  <li>HABITAT_CD: A code indicating the habitat type.</li>
+  <li>ZONE_NR: A code indicating the distance offshore.</li>
+  <li>SUBREGION_NR: A number indicating the subregion.</li>
+  <li>MPA_NR: A number identifying the marine protected area in which the sample
+  was collected. Zero indicates unprotected status.</li>
+  <li>SPECIES_NR: A number indicating the species for a sample.</li>
+  <li>SPECIES_CD: A code indicating the species for a sample. Consists of the
+  first three letters of the generic name and the first four of the specific name.
+  </li>
+  <li>LEN: The length, in cm, of a sample.</li>
+  <li>NUM: The number of individuals of a given species and length in a secondary
+  sampling unit.</li>
+  <li>TIME_SEEN: A number indicating when, during sampling, an individual was observed.
+   1: In the first five minutes, 2: From 5-10 minutes, 3: After 10 minutes.</li>
+  <li>PROT: A boolean value indicating whether a sample was in a protected area (1),
+  or not (0).</li>
+  <li>STRAT: A code indicating the stratum in which a sample was taken. Differs
+  by region.</li>
+  <li>REGION: A code indicating the region in which a sample was taken. DRTO: for
+  the Dry Tortugas, FLA KEYS: For the Florida Keys, and SEFCRI: For southeast
+  peninsular Florida.</li>
+</ol>
 <%= content_tag :div, id: "domains-data", style: {display: 'none'}, data: {domains: @domains} do %>
 <% end %>
