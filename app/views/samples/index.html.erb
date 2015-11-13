@@ -1,7 +1,7 @@
 <%= link_to '<< Data Portal Home', controller: :home, acton: :index %>
 <h3>Sample Data</h3>
 <p> Diver sample counts for reef fish species. To download, select a region and
-  year, then click download. Available as comma-separated values files (csv)
+  year then click download. Available as comma-separated values files (csv)
 in uncompressed form or compressed zip files (reccommended). </p>
 <%= form_tag '/samples',  method: "get",
 target: '_blank', class: "data-form" do %>
@@ -20,7 +20,7 @@ target: '_blank', class: "data-form" do %>
 <%= button_tag 'Reset', id: 'reset-btn' %>
 <h3>Variables:</h3>
 <ol>
-  <li>PRIMARY_SAMPLE_UNIT: A code indicating the primary sample unit in which this
+  <li>PRIMARY_SAMPLE_UNIT: A code indicating the primary sample unit in which a
     sample was collected.</li>
   <li>YEAR: A number indicating the calendar year. </li>
   <li>MONTH: A number indicating the month of the year.</li>
@@ -33,7 +33,8 @@ target: '_blank', class: "data-form" do %>
   <li>UNDERWATER_VISIBILITY: Visibility, in meters, at secondary sampling unit.</li>
   <li>MAPGRID_NR: A number indicating the primary sample unit.</li>
   <li>HABITAT_CD: A code indicating the habitat type.</li>
-  <li>ZONE_NR: A code indicating the distance offshore.</li>
+  <li>ZONE_NR: A code indicating the distance offshore: 1 - Inshore, 2 - Midchannel,
+  3 - Offshore, 4 - Fore-reef.</li>
   <li>SUBREGION_NR: A number indicating the subregion.</li>
   <li>MPA_NR: A number identifying the marine protected area in which the sample
   was collected. Zero indicates unprotected status.</li>
@@ -42,7 +43,7 @@ target: '_blank', class: "data-form" do %>
   first three letters of the generic name and the first four of the specific name.
   </li>
   <li>LEN: The length, in cm, of a sample.</li>
-  <li>NUM: The number of individuals of a given species and length in a secondary
+  <li>NUM: The number of individuals of a given species and length observed in a secondary
   sampling unit.</li>
   <li>TIME_SEEN: A number indicating when, during sampling, an individual was observed.
    1: In the first five minutes, 2: From 5-10 minutes, 3: After 10 minutes.</li>
@@ -50,9 +51,9 @@ target: '_blank', class: "data-form" do %>
   or not (0).</li>
   <li>STRAT: A code indicating the stratum in which a sample was taken. Differs
   by region.</li>
-  <li>REGION: A code indicating the region in which a sample was taken. DRTO: For
-  the Dry Tortugas, FLA KEYS: For the Florida Keys, and SEFCRI: For southeast
-  peninsular Florida.</li>
+  <li>REGION: A code indicating the region in which a sample was taken. DRTO: Dry Tortugas,
+  FLA KEYS: Florida Keys, and SEFCRI: Southeast
+  Peninsular Florida.</li>
 </ol>
 <%= content_tag :div, id: "domains-data", style: {display: 'none'}, data: {domains: @domains} do %>
 <% end %>
