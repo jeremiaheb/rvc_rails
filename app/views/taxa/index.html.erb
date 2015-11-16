@@ -4,8 +4,8 @@
   click the download button. Available as a comma-separated values file (csv).
 </p>
 <%= form_tag '/taxa.csv',  method: "get",
-target: '_blank', class: "data-form" do %>
-  <%= submit_tag 'Download' %>
+target: '_blank', class: "data-form form-inline" do %>
+  <%= submit_tag 'Download', class: 'btn btn-default' %>
 <% end %>
 <h3>Variables</h3>
 <ol>

@@ -4,20 +4,23 @@
   year then click download. Available as comma-separated values files (csv)
 in uncompressed form or compressed zip files (reccommended). </p>
 <%= form_tag '/samples',  method: "get",
-target: '_blank', class: "data-form" do %>
+target: '_blank', class: "data-form form-inline" do %>
+  <div class="form-group">
     <%= label_tag :region, "Region" %>
-    <%= select_tag :region, id: :region %>
+    <%= select_tag :region, nil, id: :region, class: 'form-control' %>
     <%= hidden_field_tag :region, nil, {id: "hidden-region"} %>
     <%= label_tag :year, "Year" %>
-    <%= select_tag :year, id: :year, value: ""%>
+    <%= select_tag :year, nil, id: :year, class: 'form-control'%>
     <%= hidden_field_tag :year, nil, {id: "hidden-year"} %>
     <%= label_tag :format %>
     <%= select_tag :format,
-      options_for_select([['zip','zip'], ['csv', 'csv']])
+      options_for_select([['zip','zip'], ['csv', 'csv']]),
+       class: 'form-control'
     %>
-  <%= submit_tag 'Download', id: "download-btn" %>
+  </div>
+  <%= submit_tag 'Download', id: "download-btn", class: "btn btn-default" %>
 <% end %>
-<%= button_tag 'Reset', id: 'reset-btn' %>
+<%= button_tag 'Reset', id: 'reset-btn', class: "btn btn-default" %>
 <h3>Variables:</h3>
 <ol>
   <li>PRIMARY_SAMPLE_UNIT: A code indicating the primary sample unit in which a
