@@ -76,4 +76,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Specify relative url 
+  config.relative_url_root = "/rvc_analysis20"
 end
