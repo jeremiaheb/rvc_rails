@@ -3,7 +3,7 @@
 <p> The number of possible primary sample units per stratum. To download select
   a year and region, then click download. Available as comma-separated values files (csv).
 </p>
-<%= form_tag '/strata.csv',  method: "get",
+<%= form_tag strata_path(format: 'csv'),  method: "get",
 target: '_blank', class: "data-form form-inline" do %>
   <div class="form-group">
     <%= label_tag :region, "Region" %>

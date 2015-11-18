@@ -3,7 +3,7 @@
 <p> Taxonomic and life history data for all species in the Reef Visual Census. To download,
   click the download button. Available as a comma-separated values file (csv).
 </p>
-<%= form_tag '/taxa.csv',  method: "get",
+<%= form_tag taxa_path(format: 'csv'),  method: "get",
 target: '_blank', class: "data-form form-inline" do %>
   <%= submit_tag 'Download', class: 'btn btn-default' %>
 <% end %>
