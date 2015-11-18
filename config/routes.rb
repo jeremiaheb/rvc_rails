@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'benthic/index'
+
   root 'home#index'
 
   get 'strata/index'

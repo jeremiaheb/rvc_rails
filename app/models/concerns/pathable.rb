@@ -12,6 +12,8 @@ module Pathable
       "#{Rails.root}/public/data/sample_data/#{abr}#{year}.#{filetype}"
     elsif model == "stratum"
       "#{Rails.root}/public/data/stratum_data/ntot_#{abr}#{year}.#{filetype}"
+    elsif model == "benthic"
+      "#{Rails.root}/public/data/benthic_data/benthic_#{abr}#{year}.#{filetype}"
     else
       raise "model unrecognized"
     end
