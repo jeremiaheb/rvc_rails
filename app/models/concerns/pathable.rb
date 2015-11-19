@@ -4,7 +4,7 @@ module Pathable
     abr = case region
       when "FLA KEYS" then "fk"
       when "SEFCRI" then "sefcri"
-      when "DRTO" then "dt"
+      when "DRY TORT" then "dt"
       else raise "unknown region"
     end
 
