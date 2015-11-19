@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
 
-  get 'benthic/index'
-
   root 'home#index'
+
+  get 'benthic' => 'benthic#index'
+
+  get 'benthic/index'
 
   get 'strata/index'
 
