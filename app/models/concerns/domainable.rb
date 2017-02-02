@@ -24,6 +24,7 @@ module Domainable
     {year: 2010, region: "DRY TORT"},
     {year: 2012, region: "DRY TORT"},
     {year: 2014, region: "DRY TORT"},
+    {year: 2016, region: "DRY TORT"},
     {year: 2013, region: "SEFCRI"},
     {year: 2014, region: "SEFCRI"},
     {year: 2015, region: "SEFCRI"}
