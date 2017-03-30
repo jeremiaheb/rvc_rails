@@ -16,6 +16,7 @@ module Domainable
     {year: 2011, region: "FLA KEYS"},
     {year: 2012, region: "FLA KEYS"},
     {year: 2014, region: "FLA KEYS"},
+    {year: 2016, region: "FLA KEYS"},
     {year: 1999, region: "DRY TORT"},
     {year: 2000, region: "DRY TORT"},
     {year: 2004, region: "DRY TORT"},
