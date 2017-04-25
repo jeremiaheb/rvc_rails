@@ -28,7 +28,8 @@ module Domainable
     {year: 2016, region: "DRY TORT"},
     {year: 2013, region: "SEFCRI"},
     {year: 2014, region: "SEFCRI"},
-    {year: 2015, region: "SEFCRI"}
+    {year: 2015, region: "SEFCRI"},
+    {year: 2016, region: "SEFCRI"}
   ]
 
   def domains
