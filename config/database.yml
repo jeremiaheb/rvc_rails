@@ -82,5 +82,5 @@ test:
 production:
   <<: *default
   database: rvc_rails_production
-  username: rvc_rails
+  username: jeremiaheb
   password: <%= ENV['RVC_RAILS_DATABASE_PASSWORD'] %>
