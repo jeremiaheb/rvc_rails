@@ -17,6 +17,7 @@ module Domainable
     {year: 2012, region: "FLA KEYS"},
     {year: 2014, region: "FLA KEYS"},
     {year: 2016, region: "FLA KEYS"},
+    {year: 2018, region: "FLA KEYS"},
     {year: 1999, region: "DRY TORT"},
     {year: 2000, region: "DRY TORT"},
     {year: 2004, region: "DRY TORT"},
@@ -26,10 +27,12 @@ module Domainable
     {year: 2012, region: "DRY TORT"},
     {year: 2014, region: "DRY TORT"},
     {year: 2016, region: "DRY TORT"},
+    {year: 2018, region: "DRY TORT"},
     {year: 2013, region: "SEFCRI"},
     {year: 2014, region: "SEFCRI"},
     {year: 2015, region: "SEFCRI"},
-    {year: 2016, region: "SEFCRI"}
+    {year: 2016, region: "SEFCRI"},
+    {year: 2018, region: "SEFCRI"}
   ]
 
   def domains
