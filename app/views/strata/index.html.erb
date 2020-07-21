@@ -28,7 +28,8 @@ target: '_blank', class: "data-form form-inline" do %>
   <li>NTOT: The number of possible primary sample units for a given year, region,
   stratum, and protected status.</li>
   <li>GRID_SIZE: The length (in meters) to a side of a primary sample unit for
-  a given year, region, stratum, and protected status.</li>
+    a given year, region, stratum, and protected status.</li>
+  <li>STAGE_LEVEL: Number indicating if survey was conducted using a single-stage or two-stage design. </li>
 </ol>
 <%= content_tag :div, id: "domains-data", style: {display: 'none'}, data: {domains: @domains} do %>
 <% end %>
