@@ -98,6 +98,6 @@
 
     $(document).ready(ready);
     // Make compatible with turbolinks
-    $(document).on('page:load', ready);
+    $(document).on('turbolinks:load', ready);
 
 }());
