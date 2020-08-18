@@ -5,6 +5,9 @@ module Pathable
       when "FLA KEYS" then "fk"
       when "SEFCRI" then "sefcri"
       when "DRY TORT" then "dt"
+      when "STTSTJ" then "sttstj"
+      when "STX" then "stx"
+      when "PRICO" then "prico"
       else raise "unknown region"
     end
 

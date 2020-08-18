@@ -32,7 +32,13 @@ module Domainable
     {year: 2014, region: "SEFCRI"},
     {year: 2015, region: "SEFCRI"},
     {year: 2016, region: "SEFCRI"},
-    {year: 2018, region: "SEFCRI"}
+    {year: 2018, region: "SEFCRI"},
+    {year: 2017, region: "STTSTJ"},
+    {year: 2019, region: "STTSTJ"},
+    {year: 2017, region: "STX"},
+    {year: 2019, region: "STX"},
+    {year: 2016, region: "PRICO"},
+    {year: 2019, region: "PRICO"}
   ]
 
   def domains
