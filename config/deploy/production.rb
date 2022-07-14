@@ -16,7 +16,7 @@ set :stage, :production
 # definition into the server list. The second argument
 # something that quacks like a hash can be used to set
 # extended properties on the server.
-server '192.168.1.180', user: 'jeremiaheb', roles: %w{web app}
+server '199.242.232.146', user: 'jeremiaheb', roles: %w{web app}
 
 set :default_env, {  "PASSENGER_INSTANCE_REGISTRY_DIR" => "/var/run/passenger-instreg"  }
 
