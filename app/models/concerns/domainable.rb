@@ -42,7 +42,8 @@ module Domainable
     {year: 2019, region: "STX"},
     {year: 2021, region: "STX"},
     {year: 2016, region: "PRICO"},
-    {year: 2019, region: "PRICO"}
+    {year: 2019, region: "PRICO"},
+    {year: 2021, region: "PRICO"}
   ]
 
   def domains
