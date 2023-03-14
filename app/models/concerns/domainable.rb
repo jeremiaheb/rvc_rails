@@ -28,6 +28,7 @@ module Domainable
     {year: 2014, region: "DRY TORT"},
     {year: 2016, region: "DRY TORT"},
     {year: 2018, region: "DRY TORT"},
+    {year: 2018, region: "FGBNMS"},
     {year: 2021, region: "DRY TORT"},
     {year: 2013, region: "SEFCRI"},
     {year: 2014, region: "SEFCRI"},
@@ -43,7 +44,10 @@ module Domainable
     {year: 2021, region: "STX"},
     {year: 2016, region: "PRICO"},
     {year: 2019, region: "PRICO"},
-    {year: 2021, region: "PRICO"}
+    {year: 2021, region: "PRICO"},
+    {year: 2022, region: "FGBNMS"},
+    {year: 2022, region: "FLA KEYS"},
+    {year: 2022, region: "SEFCRI"}
   ]
 
   def domains

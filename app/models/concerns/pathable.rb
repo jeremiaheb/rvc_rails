@@ -8,6 +8,7 @@ module Pathable
       when "STTSTJ" then "sttstj"
       when "STX" then "stx"
       when "PRICO" then "prico"
+      when "FGBNMS" then "fgb"
       else raise "unknown region"
     end
 
