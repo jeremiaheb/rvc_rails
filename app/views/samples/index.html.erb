@@ -46,7 +46,15 @@ target: '_blank', class: "data-form form-inline" do %>
   <li>ADMIN: A code indicating administrative zone </li>
   <li>PROT: A boolean value indicating whether a sample was in a protected area (1), or not (0).</li>
   <li>STRAT: A code indicating the stratum in which a sample was taken. Differs by region.</li>
-  <li>REGION: A code indicating the region in which a sample was taken. DRY TORT: Dry Tortugas, FLA KEYS: Florida Keys, and SEFCRI: Southeast Peninsular Florida.</li>
+  <li>REGION: A code indicating the region in which a sample was taken. 
+    <ul> <b>DRY TORT</b>----Dry Tortugas </ul> 
+    <ul> <b>FLA KEYS</b>----Florida Keys </ul>
+    <ul> <b>SEFCRI</b>------Southeast Peninsular Florida</ul>
+    <ul> <b>PRICO</b>-------Puerto Rico</ul>
+    <ul> <b>STTSTJ</b>------St. Thomas and St. John</ul>
+    <ul> <b>STX</b>---------St. Croix</ul>
+    <ul> <b>FGBNMS</b>------Flower Gardens Bank National Marine Sanctuary</ul>
+  </li>
 </ol>
 <%= content_tag :div, id: "domains-data", style: {display: 'none'}, data: {domains: @domains} do %>
 <% end %>
