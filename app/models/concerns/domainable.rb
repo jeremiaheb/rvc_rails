@@ -30,6 +30,7 @@ module Domainable
     {year: 2018, region: "DRY TORT"},
     {year: 2018, region: "FGBNMS"},
     {year: 2021, region: "DRY TORT"},
+    {year: 2023, region: "DRY TORT"},
     {year: 2013, region: "SEFCRI"},
     {year: 2014, region: "SEFCRI"},
     {year: 2015, region: "SEFCRI"},
