@@ -48,7 +48,11 @@ module Domainable
     {year: 2021, region: "PRICO"},
     {year: 2022, region: "FGBNMS"},
     {year: 2022, region: "FLA KEYS"},
-    {year: 2022, region: "SEFCRI"}
+    {year: 2022, region: "SEFCRI"},
+    {year: 2023, region: "PRICO"},
+    {year: 2023, region: "STTSTJ"},
+    {year: 2023, region: "STX"},
+    {year: 2023, region: "FGBNMS"}
   ]
 
   def domains
