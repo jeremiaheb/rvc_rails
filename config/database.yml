@@ -15,6 +15,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  host: 127.0.0.1
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
@@ -22,6 +23,8 @@ default: &default
 
 development:
   <<: *default
+  username: rvcrails_development
+  password: rvcrails_development
   database: rvcrails_development
 
   # The specified database role being used to connect to PostgreSQL.
@@ -56,6 +59,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
+  username: rvcrails_test
+  password: rvcrails_test
   database: rvcrails_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
@@ -82,8 +87,8 @@ production:
   primary: &primary_production
     <<: *default
     database: rvcrails_production
-    username: rvcrails
-    password: <%= ENV["RVCRAILS_DATABASE_PASSWORD"] %>
+    username: rvcrails_production
+    password: <%= ENV.fetch("RVCRAILS_DATABASE_PASSWORD", "rvcrails_production") %>
   cache:
     <<: *primary_production
     database: rvcrails_production_cache
