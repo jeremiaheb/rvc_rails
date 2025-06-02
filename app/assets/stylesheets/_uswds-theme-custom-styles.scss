@@ -21,3 +21,10 @@ i.e.
 */
 
 @use "uswds-core" as *;
+
+.usa-section {
+   // Override large Y padding that seems to be hard-coded in USWDS
+   @include at-media("tablet") {
+      @include u-padding-y($theme-site-margins-width);
+   }
+}
