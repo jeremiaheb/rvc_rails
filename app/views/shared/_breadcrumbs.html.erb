@@ -1,0 +1,18 @@
+<%#
+  Use this partial like:
+
+  <%= render "shared/breadcrumbs", links: [["Foos", foos_path], ["Bars", bars_path]] % >
+%>
+
+<nav class="usa-breadcrumb padding-0">
+  <ol class="usa-breadcrumb__list">
+    <li class="usa-breadcrumb__list-item">
+      <%= link_to "Data Portal Home", root_path, class: "usa-breadcrumb__link" %>
+    </li>
+    <%- Array(local_assigns[:links]).each do |b| %>
+      <li class="usa-breadcrumb__list-item">
+        <%= link_to b[0], b[1], class: "usa-breadcrumb__link" %>
+      </li>
+    <%- end %>
+  </ol>
+</nav>

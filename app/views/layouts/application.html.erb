@@ -23,6 +23,25 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="usa-overlay"></div>
+    <header class="usa-header usa-header--basic">
+      <div class="usa-nav-container">
+        <div class="usa-logo">
+          <em class="usa-logo__text"><%= link_to "National Coral Reef Monitoring Program", root_path %></em>
+          <button type="button" class="usa-menu-btn">Menu</button>
+      </div>
+      <nav class="usa-nav">
+        <ul class="usa-nav__primary usa-accordion">
+          <li class="usa-nav__primary-item">
+            <%= link_to "SEFSC Website", "https://www.sefsc.noaa.gov", class: "usa-nav-link" %>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main id="main-content">
+      <section class="grid-container usa-section">
+        <%= yield %>
+      </section>
+    </main>
   </body>
 </html>

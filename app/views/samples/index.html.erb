@@ -1,0 +1,78 @@
+<%= render "shared/breadcrumbs", links: [["Sample Data", samples_path]] %>
+
+<h1 class="usa-heading">Sample Data</h1>
+<p>
+  Diver sample counts for reef fish species. To download, select a region and year then click download. Available as comma-separated values files (csv) in uncompressed form or compressed zip files (reccommended).
+</p>
+
+<%= form_tag samples_path, method: "get", target: '_blank', class: "usa-form usa-form--large" do %>
+  <fieldset class="usa-fieldset display-flex">
+    <div class="width-15 padding-right-1">
+      <%= label_tag :region, "Region", class: "usa-label", for: "region-select" %>
+      <%= select_tag :region, options_for_select(@domains.map { |d| d[:region] }.uniq.sort), include_blank: "- Select -", id: "region-select", class: "usa-select", autocomplete: "off" %>
+      <%= hidden_field_tag :region, "", id: "region-hidden" %>
+    </div>
+    <div class="width-15 padding-right-1">
+      <%= label_tag :year, "Year", class: "usa-label", for: "year-select" %>
+      <%= select_tag :year, options_for_select(@domains.map { |d| d[:year] }.uniq.sort), id: "year-select", class: "usa-select", include_blank: "- Select -", disabled: true, data: { domains: @domains } %>
+    </div>
+    <div class="width-10">
+      <%= label_tag :format, "Format", class: "usa-label", for: "format-select" %>
+      <%= select_tag :format, options_for_select(["zip", "csv"]), id: "format-select", class: "usa-select" %>
+    </div>
+  </fieldset>
+  <div class="display-flex">
+    <%= submit_tag "Download", id: "download-button", class: "usa-button", disabled: true %>
+    <%= link_to "Reset", "#", id: "reset-button", class: "usa-button usa-button--outline" %>
+  </div>
+<% end %>
+
+<table class="usa-table">
+  <caption>Variables</caption>
+  <thead>
+    <tr>
+      <th scope="col">Variable</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><th scope="row">PRIMARY_SAMPLE_UNIT</th><td>A code indicating the primary sample unit in which a sample was collected.</td></tr>
+    <tr><th scope="row">YEAR</th><td>A number indicating the calendar year. </td></tr>
+    <tr><th scope="row">MONTH</th><td>A number indicating the month of the year.</td></tr>
+    <tr><th scope="row">DAY</th><td>A number indicating the day of the month (EST).</td></tr>
+    <tr><th scope="row">STATION_NR</th><td>A number indicating the secondary sampling unit within a given primary sample unit.</td></tr>
+    <tr><th scope="row">LAT_DEGREES</th><td>Latitude of secondary sampling unit in decimal degrees.</td></tr>
+    <tr><th scope="row">LON_DEGREES</th><td>Longitude of secondary sampling unit in decimal degrees.</td></tr>
+    <tr><th scope="row">DEPTH</th><td>Average depth, in meters, of secondary sampling unit.</td></tr>
+    <tr><th scope="row">UNDERWATER_VISIBILITY</th><td>Visibility, in meters, at secondary sampling unit.</td></tr>
+    <tr><th scope="row">MAPGRID_NR</th><td>A number indicating the primary sample unit.</td></tr>
+    <tr><th scope="row">HABITAT_CD</th><td>A code indicating the habitat type.</td></tr>
+    <tr><th scope="row">ZONE_NR</th><td>A code indicating the distance offshore: 1 - Inshore, 2 - Midchannel, 3 - Offshore, 4 - Fore-reef.</td></tr>
+    <tr><th scope="row">SUBREGION_NR</th><td>A number indicating the subregion.</td></tr>
+    <tr><th scope="row">MPA_NR</th><td>A number identifying the marine protected area in which the sample was collected. Zero indicates unprotected status.</td></tr>
+    <tr><th scope="row">SPECIES_NR</th><td>A number indicating the species for a sample.</td></tr>
+    <tr><th scope="row">SPECIES_CD</th><td>A code indicating the species for a sample. Consists of the first three letters of the generic name and the first four of the specific name.</td></tr>
+    <tr><th scope="row">LEN</th><td>The length, in cm, of a sample.</td></tr>
+    <tr><th scope="row">NUM</th><td>The number of individuals of a given species and length observed in a secondary sampling unit.</td></tr>
+    <tr><th scope="row">TIME_SEEN</th><td>A number indicating when, during sampling, an individual was observed. 1: In the first five minutes, 2: From 5-10 minutes, 3: After 10 minutes.</td></tr>
+    <tr><th scope="row">DEPTH_STRAT</th><td>A code indicating depth stratum </td></tr>
+    <tr><th scope="row">ADMIN</th><td>A code indicating administrative zone </td></tr>
+    <tr><th scope="row">PROT</th><td>A boolean value indicating whether a sample was in a protected area (1), or not (0).</td></tr>
+    <tr><th scope="row">STRAT</th><td>A code indicating the stratum in which a sample was taken. Differs by region.</td></tr>
+    <tr>
+      <th scope="row">REGION</th>
+      <td>
+        A code indicating the region in which a sample was taken. 
+        <ul>
+          <li> <b>DRY TORT</b>----Dry Tortugas </li> 
+          <li> <b>FLA KEYS</b>----Florida Keys </li>
+          <li> <b>SEFCRI</b>------Southeast Peninsliar Florida</li>
+          <li> <b>PRICO</b>-------Puerto Rico</li>
+          <li> <b>STTSTJ</b>------St. Thomas and St. John</li>
+          <li> <b>STX</b>---------St. Croix</li>
+          <li> <b>FGBNMS</b>------Flower Gardens Bank National Marine Sanctuary</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,28 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "229a54e7ab20de9a7c0b536139bebc7830f026931101e6e69b465d9ee8192fd8",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/application_controller.rb",
+      "line": 7,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(DataFile.new(type, region, year, format).path)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ApplicationController",
+        "method": "send_data_file"
+      },
+      "user_input": "DataFile.new(type, region, year, format).path",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": "The DataFile constructor validates the path components"
+    }
+  ],
+  "brakeman_version": "7.0.2"
+}
