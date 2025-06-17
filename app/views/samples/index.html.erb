@@ -9,16 +9,16 @@
   <%= form_tag samples_path, method: "get", target: '_blank', class: "usa-form usa-form--large" do %>
     <fieldset class="usa-fieldset display-flex">
       <div class="width-15 padding-right-1">
-        <%= label_tag :region, "Region", class: "usa-label", for: "region-select" %>
+        <%= label_tag :region, "Region", class: "usa-label text-bold", for: "region-select" %>
         <%= select_tag :region, options_for_select(@domains.map { |d| d[:region] }.uniq.sort), include_blank: "- Select -", id: "region-select", class: "usa-select", autocomplete: "off" %>
         <%= hidden_field_tag :region, "", id: "region-hidden" %>
       </div>
       <div class="width-15 padding-right-1">
-        <%= label_tag :year, "Year", class: "usa-label", for: "year-select" %>
+        <%= label_tag :year, "Year", class: "usa-label text-bold", for: "year-select" %>
         <%= select_tag :year, options_for_select(@domains.map { |d| d[:year] }.uniq.sort), id: "year-select", class: "usa-select", include_blank: "- Select -", disabled: true, data: { domains: @domains } %>
       </div>
       <div class="width-10">
-        <%= label_tag :format, "Format", class: "usa-label", for: "format-select" %>
+        <%= label_tag :format, "Format", class: "usa-label text-bold", for: "format-select" %>
         <%= select_tag :format, options_for_select(["zip", "csv"]), id: "format-select", class: "usa-select" %>
       </div>
     </fieldset>
