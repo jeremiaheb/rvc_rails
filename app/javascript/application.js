@@ -3,6 +3,8 @@ import jQuery from "jquery"
 window.jQuery = jQuery
 window.$ = jQuery
 
+import "@uswds/uswds"
+
 // On document ready
 $(function() {
   const $regionSelect = $("#region-select");
