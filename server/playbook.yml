@@ -344,7 +344,7 @@
       ansible.builtin.git:
         repo: "https://github.com/rbenv/rbenv"
         dest: "/var/www/apps/rvc_rails/.rbenv"
-        version: "10e96bfc473c7459a447fbbda12164745a72fd37" # v1.3.2
+        version: "v1.3.2"
       become: true
       become_user: rvcrails
 
@@ -352,7 +352,7 @@
       ansible.builtin.git:
         repo: "https://github.com/rbenv/ruby-build"
         dest: "/var/www/apps/rvc_rails/.rbenv/plugins/ruby-build"
-        version: "7c0b13b355ac34448f1c0f777d1d0f59e4a909f0" # v20250507
+        version: "v20250610"
       become: true
       become_user: rvcrails
 
@@ -374,10 +374,10 @@
       become: true
       become_user: rvcrails
 
-    - name: install ruby 3.4.3
+    - name: install ruby 3.4.4
       ansible.builtin.command:
-        cmd: "/var/www/apps/rvc_rails/.rbenv/bin/rbenv install 3.4.3"
-        creates: "/var/www/apps/rvc_rails/.rbenv/versions/3.4.3"
+        cmd: "/var/www/apps/rvc_rails/.rbenv/bin/rbenv install 3.4.4"
+        creates: "/var/www/apps/rvc_rails/.rbenv/versions/3.4.4"
       become: true
       become_user: rvcrails
 
@@ -433,14 +433,14 @@
       ansible.builtin.git:
         repo: "https://github.com/rbenv/rbenv"
         dest: "{{ ansible_user_dir }}/.rbenv"
-        version: "10e96bfc473c7459a447fbbda12164745a72fd37" # v1.3.2
+        version: "v1.3.2"
       when: development_build is defined
 
     - name: install ruby-build
       ansible.builtin.git:
         repo: "https://github.com/rbenv/ruby-build"
         dest: "{{ ansible_user_dir }}/.rbenv/plugins/ruby-build"
-        version: "7c0b13b355ac34448f1c0f777d1d0f59e4a909f0" # v20250507
+        version: "v20250610"
       when: development_build is defined
 
     - name: add rbenv init to ~/.bashrc
@@ -451,17 +451,17 @@
           eval "$(~/.rbenv/bin/rbenv init - --no-rehash bash)"
       when: development_build is defined
 
-    - name: install ruby 3.4.3
+    - name: install ruby 3.4.4
       ansible.builtin.command:
-        cmd: "{{ ansible_user_dir }}/.rbenv/bin/rbenv install 3.4.3"
-        creates: "{{ ansible_user_dir }}/.rbenv/versions/3.4.3"
+        cmd: "{{ ansible_user_dir }}/.rbenv/bin/rbenv install 3.4.4"
+        creates: "{{ ansible_user_dir }}/.rbenv/versions/3.4.4"
       when: development_build is defined
 
     - name: install nvm
       ansible.builtin.git:
         repo: "http://github.com/nvm-sh/nvm"
         dest: "{{ ansible_user_dir }}/.nvm"
-        version: "977563e97ddc66facf3a8e31c6cff01d236f09bd" # v0.40.3
+        version: "v0.40.3"
         recursive: false
       when: development_build is defined
 
