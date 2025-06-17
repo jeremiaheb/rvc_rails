@@ -1,58 +1,60 @@
-<%= render "shared/breadcrumbs", links: [["Benthic Data", benthic_path]] %>
+<section class="usa-section grid-container">
+  <%= render "shared/breadcrumbs", links: [["Benthic Data", benthic_path]] %>
 
-<h1 class="usa-heading">Benthic Data</h1>
-<p>
-  Benthic data collected by divers while conducting the reef visual census. To download, select a region and year then click download. Available as comma-separated values files (csv).
-</p>
+  <h1 class="usa-heading">Benthic Data</h1>
+  <p>
+    Benthic data collected by divers while conducting the reef visual census. To download, select a region and year then click download. Available as comma-separated values files (csv).
+  </p>
 
-<%= form_tag benthic_path, method: "get", target: '_blank', class: "usa-form usa-form--large" do %>
-  <fieldset class="usa-fieldset display-flex">
-    <div class="width-15 padding-right-1">
-      <%= label_tag :region, "Region", class: "usa-label", for: "region-select" %>
-      <%= select_tag :region, options_for_select(@domains.map { |d| d[:region] }.uniq.sort), include_blank: "- Select -", id: "region-select", class: "usa-select", autocomplete: "off" %>
-      <%= hidden_field_tag :region, "", id: "region-hidden" %>
+  <%= form_tag benthic_path, method: "get", target: '_blank', class: "usa-form usa-form--large" do %>
+    <fieldset class="usa-fieldset display-flex">
+      <div class="width-15 padding-right-1">
+        <%= label_tag :region, "Region", class: "usa-label", for: "region-select" %>
+        <%= select_tag :region, options_for_select(@domains.map { |d| d[:region] }.uniq.sort), include_blank: "- Select -", id: "region-select", class: "usa-select", autocomplete: "off" %>
+        <%= hidden_field_tag :region, "", id: "region-hidden" %>
+      </div>
+      <div class="width-15 padding-right-1">
+        <%= label_tag :year, "Year", class: "usa-label", for: "year-select" %>
+        <%= select_tag :year, options_for_select(@domains.map { |d| d[:year] }.uniq.sort), id: "year-select", class: "usa-select", include_blank: "- Select -", disabled: true, data: { domains: @domains } %>
+      </div>
+      <div class="width-10">
+        <%= hidden_field_tag :format, "csv" %>
+      </div>
+    </fieldset>
+    <div class="display-flex">
+      <%= submit_tag "Download", id: "download-button", class: "usa-button", disabled: true %>
+      <%= link_to "Reset", "#", id: "reset-button", class: "usa-button usa-button--outline" %>
     </div>
-    <div class="width-15 padding-right-1">
-      <%= label_tag :year, "Year", class: "usa-label", for: "year-select" %>
-      <%= select_tag :year, options_for_select(@domains.map { |d| d[:year] }.uniq.sort), id: "year-select", class: "usa-select", include_blank: "- Select -", disabled: true, data: { domains: @domains } %>
-    </div>
-    <div class="width-10">
-      <%= hidden_field_tag :format, "csv" %>
-    </div>
-  </fieldset>
-  <div class="display-flex">
-    <%= submit_tag "Download", id: "download-button", class: "usa-button", disabled: true %>
-    <%= link_to "Reset", "#", id: "reset-button", class: "usa-button usa-button--outline" %>
-  </div>
-<% end %>
+  <% end %>
 
-<table class="usa-table">
-  <caption>Variables</caption>
-  <thead>
-    <tr>
-      <th scope="col">Variable</th>
-      <th scope="col">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><th scope="row">REGION</th><td>A code indicating the region. DRY TORT: Dry Tortugas, FLA KEYS: Florida Keys, and SEFCRI: Southeast Peninsular Florida.</td></tr>
-    <tr><th scope="row">YEAR</th><td>A number indicating the calendar year.</td></tr>
-    <tr><th scope="row">PRIMARY_SAMPLE_UNIT</th><td> A code indicating the primary sample unit in which a sample was collected.</td></tr>
-    <tr><th scope="row">STATION_NR</th><td> A number indicating the secondary sampling unit within a given primary sample unit.</td></tr>
-    <tr><th scope="row">DEPTH</th><td>Average depth, in meters, of secondary sampling unit.</td></tr>
-    <tr><th scope="row">MAX_HARD_RELIEF</th><td>The maximum height, in meters, of hard relief (e.g. hard corals, rock).</td></tr>
-    <tr><th scope="row">MAX_SOFT_RELIEF</th><td>The maximum height, in meters, of soft relief (e.g. soft corals, sponges).</td></tr>
-    <tr><th scope="row">AVG_HARD_RELIEF</th><td>The average height, in meters, of hard relief.</td></tr>
-    <tr><th scope="row">HARD_REL_PCT_0</th><td>Percentage of hard relief less than 0.2 meters.</td></tr>
-    <tr><th scope="row">HARD_REL_PCT_1</th><td>Percentage of hard relief between 0.2 and 0.5 meters.</td></tr>
-    <tr><th scope="row">HARD_REL_PCT_2</th><td>Percentage of hard relief between 0.5 and 1.0 meters.</td></tr>
-    <tr><th scope="row">HARD_REL_PCT_3</th><td>Percentage of hard relief between 1.0 and 1.5 meters.</td></tr>
-    <tr><th scope="row">HARD_REL_PCT_4</th><td>Percentage of hard relief greater than 1.5 meters.</td></tr>
-    <tr><th scope="row">PCT_SAND</th><td>Percentage of abiotic cover that is sand.</td></tr>
-    <tr><th scope="row">PCT_HARD_BOTTOM</th><td>Percentage of abiotic cover that is hard bottom.</td></tr>
-    <tr><th scope="row">PCT_RUBBLE</th><td>Percentage of abiotic cover that is rubble.</td></tr>
-    <tr><th scope="row">PCT_CORAL</th><td>Percentage of biotic hardbottom that is coral.</td></tr>
-    <tr><th scope="row">PCT_OCTO</th><td>Percentage of biotic hardbottom that is octocoral.</td></tr>
-    <tr><th scope="row">PCT_SPONGE</th><td>Percentage of  biotic hardbottom that is sponge.</td></tr>
-  </tbody>
-</table>
+  <table class="usa-table">
+    <caption>Variables</caption>
+    <thead>
+      <tr>
+        <th scope="col">Variable</th>
+        <th scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><th scope="row">REGION</th><td>A code indicating the region. DRY TORT: Dry Tortugas, FLA KEYS: Florida Keys, and SEFCRI: Southeast Peninsular Florida.</td></tr>
+      <tr><th scope="row">YEAR</th><td>A number indicating the calendar year.</td></tr>
+      <tr><th scope="row">PRIMARY_SAMPLE_UNIT</th><td> A code indicating the primary sample unit in which a sample was collected.</td></tr>
+      <tr><th scope="row">STATION_NR</th><td> A number indicating the secondary sampling unit within a given primary sample unit.</td></tr>
+      <tr><th scope="row">DEPTH</th><td>Average depth, in meters, of secondary sampling unit.</td></tr>
+      <tr><th scope="row">MAX_HARD_RELIEF</th><td>The maximum height, in meters, of hard relief (e.g. hard corals, rock).</td></tr>
+      <tr><th scope="row">MAX_SOFT_RELIEF</th><td>The maximum height, in meters, of soft relief (e.g. soft corals, sponges).</td></tr>
+      <tr><th scope="row">AVG_HARD_RELIEF</th><td>The average height, in meters, of hard relief.</td></tr>
+      <tr><th scope="row">HARD_REL_PCT_0</th><td>Percentage of hard relief less than 0.2 meters.</td></tr>
+      <tr><th scope="row">HARD_REL_PCT_1</th><td>Percentage of hard relief between 0.2 and 0.5 meters.</td></tr>
+      <tr><th scope="row">HARD_REL_PCT_2</th><td>Percentage of hard relief between 0.5 and 1.0 meters.</td></tr>
+      <tr><th scope="row">HARD_REL_PCT_3</th><td>Percentage of hard relief between 1.0 and 1.5 meters.</td></tr>
+      <tr><th scope="row">HARD_REL_PCT_4</th><td>Percentage of hard relief greater than 1.5 meters.</td></tr>
+      <tr><th scope="row">PCT_SAND</th><td>Percentage of abiotic cover that is sand.</td></tr>
+      <tr><th scope="row">PCT_HARD_BOTTOM</th><td>Percentage of abiotic cover that is hard bottom.</td></tr>
+      <tr><th scope="row">PCT_RUBBLE</th><td>Percentage of abiotic cover that is rubble.</td></tr>
+      <tr><th scope="row">PCT_CORAL</th><td>Percentage of biotic hardbottom that is coral.</td></tr>
+      <tr><th scope="row">PCT_OCTO</th><td>Percentage of biotic hardbottom that is octocoral.</td></tr>
+      <tr><th scope="row">PCT_SPONGE</th><td>Percentage of  biotic hardbottom that is sponge.</td></tr>
+    </tbody>
+  </table>
+</section>

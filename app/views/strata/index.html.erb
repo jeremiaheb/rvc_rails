@@ -1,46 +1,48 @@
-<%= render "shared/breadcrumbs", links: [["Stratum Data", strata_path]] %>
+<section class="usa-section grid-container">
+  <%= render "shared/breadcrumbs", links: [["Stratum Data", strata_path]] %>
 
-<h1 class="usa-heading">Stratum Data</h1>
-<p>
-  The number of possible primary sample units per stratum. To download select a year and region, then click download. Available as comma-separated values files (csv).
-</p>
+  <h1 class="usa-heading">Stratum Data</h1>
+  <p>
+    The number of possible primary sample units per stratum. To download select a year and region, then click download. Available as comma-separated values files (csv).
+  </p>
 
-<%= form_tag strata_path, method: "get", target: '_blank', class: "usa-form usa-form--large" do %>
-  <fieldset class="usa-fieldset display-flex">
-    <div class="width-15 padding-right-1">
-      <%= label_tag :region, "Region", class: "usa-label", for: "region-select" %>
-      <%= select_tag :region, options_for_select(@domains.map { |d| d[:region] }.uniq.sort), include_blank: "- Select -", id: "region-select", class: "usa-select", autocomplete: "off" %>
-      <%= hidden_field_tag :region, "", id: "region-hidden" %>
+  <%= form_tag strata_path, method: "get", target: '_blank', class: "usa-form usa-form--large" do %>
+    <fieldset class="usa-fieldset display-flex">
+      <div class="width-15 padding-right-1">
+        <%= label_tag :region, "Region", class: "usa-label", for: "region-select" %>
+        <%= select_tag :region, options_for_select(@domains.map { |d| d[:region] }.uniq.sort), include_blank: "- Select -", id: "region-select", class: "usa-select", autocomplete: "off" %>
+        <%= hidden_field_tag :region, "", id: "region-hidden" %>
+      </div>
+      <div class="width-15 padding-right-1">
+        <%= label_tag :year, "Year", class: "usa-label", for: "year-select" %>
+        <%= select_tag :year, options_for_select(@domains.map { |d| d[:year] }.uniq.sort), id: "year-select", class: "usa-select", include_blank: "- Select -", disabled: true, data: { domains: @domains } %>
+      </div>
+      <div class="width-10">
+        <%= hidden_field_tag :format, "csv" %>
+      </div>
+    </fieldset>
+    <div class="display-flex">
+      <%= submit_tag "Download", id: "download-button", class: "usa-button", disabled: true %>
+      <%= link_to "Reset", "#", id: "reset-button", class: "usa-button usa-button--outline" %>
     </div>
-    <div class="width-15 padding-right-1">
-      <%= label_tag :year, "Year", class: "usa-label", for: "year-select" %>
-      <%= select_tag :year, options_for_select(@domains.map { |d| d[:year] }.uniq.sort), id: "year-select", class: "usa-select", include_blank: "- Select -", disabled: true, data: { domains: @domains } %>
-    </div>
-    <div class="width-10">
-      <%= hidden_field_tag :format, "csv" %>
-    </div>
-  </fieldset>
-  <div class="display-flex">
-    <%= submit_tag "Download", id: "download-button", class: "usa-button", disabled: true %>
-    <%= link_to "Reset", "#", id: "reset-button", class: "usa-button usa-button--outline" %>
-  </div>
-<% end %>
+  <% end %>
 
-<table class="usa-table">
-  <caption>Variables</caption>
-  <thead>
-    <tr>
-      <th scope="col">Variable</th>
-      <th scope="col">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><th scope="row">REGION</th><td>A code indicating the region. DRY TORT: Dry Tortugas, FLA KEYS: Florida Keys, and SEFCRI: Southeast Peninsular Florida.</td></tr>
-    <tr><th scope="row">YEAR</th><td>A number indicating the calendar year.</td></tr>
-    <tr><th scope="row">PROT</th><td>A boolean indicating the protected status: 1 - protected, 2 - unprotected.</td></tr>
-    <tr><th scope="row">STRAT</th><td>A code indicating the stratum. Differs by region.</td></tr>
-    <tr><th scope="row">NTOT</th><td>The number of possible primary sample units for a given year, region, stratum, and protected status.</td></tr>
-    <tr><th scope="row">GRID_SIZE</th><td>The length (in meters) to a side of a primary sample unit for a given year, region, stratum, and protected status.</td></tr>
-    <tr><th scope="row">STAGE_LEVEL</th><td>Number indicating if survey was conducted using a single-stage or two-stage design. </td></tr>
-  </tbody>
-</table>
+  <table class="usa-table">
+    <caption>Variables</caption>
+    <thead>
+      <tr>
+        <th scope="col">Variable</th>
+        <th scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><th scope="row">REGION</th><td>A code indicating the region. DRY TORT: Dry Tortugas, FLA KEYS: Florida Keys, and SEFCRI: Southeast Peninsular Florida.</td></tr>
+      <tr><th scope="row">YEAR</th><td>A number indicating the calendar year.</td></tr>
+      <tr><th scope="row">PROT</th><td>A boolean indicating the protected status: 1 - protected, 2 - unprotected.</td></tr>
+      <tr><th scope="row">STRAT</th><td>A code indicating the stratum. Differs by region.</td></tr>
+      <tr><th scope="row">NTOT</th><td>The number of possible primary sample units for a given year, region, stratum, and protected status.</td></tr>
+      <tr><th scope="row">GRID_SIZE</th><td>The length (in meters) to a side of a primary sample unit for a given year, region, stratum, and protected status.</td></tr>
+      <tr><th scope="row">STAGE_LEVEL</th><td>Number indicating if survey was conducted using a single-stage or two-stage design. </td></tr>
+    </tbody>
+  </table>
+</div>
