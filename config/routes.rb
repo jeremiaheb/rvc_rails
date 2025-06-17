@@ -11,7 +11,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#index"
+  get "home/index" # alternative path from prior version of this application
 
-  resources "samples", only: [:index]
+  get "samples" => "samples#index"
   get "samples/index" # alternative path from prior version of this application
+
+  get "benthic" => "benthic#index"
+  get "benthic/index" # alternative path from prior version of this application
 end
