@@ -11,7 +11,7 @@ class SamplesControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal 200, @response.status
     assert_equal "text/csv", @response.content_type
-    assert_equal File.read(Rails.root.join("test/data/sample_data/fgb2024.csv")), @response.body
+    assert_equal File.binread(Rails.root.join("test/data/sample_data/fgb2024.csv")), @response.body
   end
 
   test "sends a ZIP for a valid region/year combination" do

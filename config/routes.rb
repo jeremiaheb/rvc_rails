@@ -21,4 +21,7 @@ Rails.application.routes.draw do
 
   get "benthic" => "benthic#index"
   get "benthic/index" # alternative path from prior version of this application
+
+  get "taxa" => "taxa#index"
+  get "taxa/index" # alternative path from prior version of this application
 end
