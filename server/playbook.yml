@@ -106,6 +106,14 @@
         enabled: true
       become: true
 
+    - name: allow ssh-rsa key authentication
+      ansible.builtin.copy:
+        dest: /etc/ssh/sshd_config.d/80-ssh-rsa-pubkey-settings.conf
+        content: |
+          PubkeyAcceptedAlgorithms +ssh-rsa
+      become: true
+      notify: restart sshd
+
     - name: install required packages
       ansible.builtin.package:
         name:
@@ -117,14 +125,6 @@
           - sendmail
           - zlib1g-dev
       become: true
-
-    - name: install desktop environment
-      ansible.builtin.package:
-        name:
-          - slim
-          - ubuntu-desktop
-      become: true
-      when: skip_desktop is undefined
 
     - name: install required libraries for ansible
       ansible.builtin.package:
@@ -316,12 +316,24 @@
         password: '$6$OZl.q7ZgYzZIolON$HFXN04yl8qCRuq4KlE0DYRTCKnlEU6oK5krI70baHCDDceJDafoSTgP3elqGViCunFqf2gqC.syi/j/ZXZrP1/'
         shell: /bin/bash
       become: true
-
+      
     - name: make rvcrails directory world readable
       ansible.builtin.file:
         path: /var/www/apps/rvc_rails
         mode: "0755"
+        state: "directory"
       become: true
+
+    - name: make rvcrails socket directory world readable
+      ansible.builtin.file:
+        path: "{{ item }}"
+        mode: "0755"
+        state: "directory"
+      become: true
+      with_items:
+        - "/var/www/apps/rvc_rails/shared"
+        - "/var/www/apps/rvc_rails/shared/tmp"
+        - "/var/www/apps/rvc_rails/shared/tmp/sockets"
 
     - name: add /vagrant as a safe git directory for local deployments
       ansible.builtin.copy:
@@ -334,11 +346,14 @@
         mode: "0644"
       become: true
 
-    - name: install ssh key for rvcrails
+    - name: install deploy keys for rvcrails
       ansible.posix.authorized_key:
         user: rvcrails
-        key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDP4nFAKeLb/7w6lL5MLrkYv/rLoyAl8Wycq1b+lOR7cknqrnWM1PJ+0Qkx8Je+tw/vIKY8CFzBoi4mZ/eOm0dAr5FjNXNCfZf10PWVgsizpOVnYOJTUMHhgO81cASL0pGNxeNr7lHB8FRB3mIcTT6639nrQuwKmYh1YNjHoMErIS1VkkYi6SuYJldWR1LYOJ3PzGoA4GLrck0VHbOJERs1u/ORimw7N0j5mrVKnJQ+72guuWPsbiLl4zwt/RUnxxQi9ou8fisE7qwLmoulCLw11m9Z7xUo86aBmuYfJQ7WBd8lQWczhKorpjEgrwvYcClPAUctjw14rraJGgxc/w2PcGAeH+Kby7WmdACKtZhI5BaNGMX/i0gZj4qlF4tyRJx2DRsTPL3wA2qranNPw5dqtR5VAxJleHx4R3WCXomhQ2BuqCrb5c65wZGaLpOedLeuMDHkdYdTj67OPJvvQzAQ3zQFbGEJX670pw9DU/6rm4GF4pzE93Qzjo9L8SOsBi4w7lQugmbndUF/q7WP8RxiTNL33xgloq6/Tt3Aclu9Z6yDd0UfcmUHezqCIEd6KNon0Q8v55EVWkPlrliZLpONZPHWniRT965D1A3uw5MkWMzYGx26jAS0/RNAfdfS0uwb8zMnBwSdrfETVk2KgycKBxl3r36KytLLMRpl6/VwIQ=="
+        key: "https://github.com/{{ item }}.keys"
       become: true
+      with_items:
+        # GitHub usernames
+        - "alindeman-NOAA"
 
     - name: install rbenv
       ansible.builtin.git:
@@ -429,6 +444,14 @@
     # tasks are skipped because they are meaningless for the production virtual
     # machine, which is not used with Vagrant.
     # --------------------------
+    - name: install desktop environment
+      ansible.builtin.package:
+        name:
+          - slim
+          - ubuntu-desktop
+      become: true
+      when: development_build is defined and skip_desktop is undefined
+
     - name: install rbenv
       ansible.builtin.git:
         repo: "https://github.com/rbenv/rbenv"
@@ -533,5 +556,11 @@
     - name: restart rvcrails
       ansible.builtin.service:
         name: rvcrails
+        state: restarted
+      become: true
+
+    - name: restart sshd
+      ansible.builtin.service:
+        name: sshd
         state: restarted
       become: true
