@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   get "samples" => "samples#index"
   get "samples/index" # alternative path from prior version of this application
 
+  get "strata" => "strata#index"
+  get "strata/index" # alternative path from prior version of this application
+
   get "benthic" => "benthic#index"
   get "benthic/index" # alternative path from prior version of this application
 end

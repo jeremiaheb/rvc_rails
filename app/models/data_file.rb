@@ -15,15 +15,20 @@ class DataFile
     "FGBNMS" => "fgb"
   }
 
+  FOLDER_NAME_BY_TYPE = {
+    "sample" => "sample_data",
+    "stratum" => "stratum_data",
+    "benthic" => "benthic_data"
+  }
+
   FILE_PREFIX_BY_TYPE = {
-    "sample" => "",
     "stratum" => "ntot_",
     "benthic" => "benthic_"
   }
 
   # See data_file_test.rb for examples
   def initialize(type, region, year, file_type, data_path: Rails.configuration.x.data_file_path)
-    raise InvalidTypeError, "Invalid type: #{type}" unless FILE_PREFIX_BY_TYPE.key?(type)
+    raise InvalidTypeError, "Invalid type: #{type}" unless FOLDER_NAME_BY_TYPE.key?(type)
     raise InvalidRegionError, "Invalid region: #{region}" unless REGION_ABBREVIATIONS.key?(region)
     raise InvalidYearError, "Invalid year: #{year}" unless /\A[0-9]+\z/ =~ year
     raise InvalidFileTypeError, "Invalid file type: #{file_type}" unless ["csv", "zip"].include?(file_type)
@@ -38,8 +43,8 @@ class DataFile
   def path
     File.join(
       @data_path,
-      "#{@type}_data", # e.g., sample_data, benthic_data
-      "#{FILE_PREFIX_BY_TYPE.fetch(@type)}#{REGION_ABBREVIATIONS.fetch(@region)}#{@year}.#{@file_type}" # e.g., dt2004.zip or ntot_dt2004.zip
+      FOLDER_NAME_BY_TYPE.fetch(@type),
+      "#{FILE_PREFIX_BY_TYPE.fetch(@type, "")}#{REGION_ABBREVIATIONS.fetch(@region)}#{@year}.#{@file_type}" # e.g., dt2004.zip or ntot_dt2004.zip
     )
   end
 end

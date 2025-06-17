@@ -7,7 +7,7 @@
 
 <h2 class="usa-heading">Available Data</h2>
 <ul class="usa-collection">
-  <li class="usa-collection__item">
+  <li class="usa-collection__item maxw-full">
     <div class="usa-collection__body">
       <h3 class="usa-collection__heading"><%= link_to "Sample Data", samples_path, class: "usa-link" %></h3>
       <p class="usa-collection__description">
@@ -15,7 +15,15 @@
       </p>
     </div>
   </li>
-  <li class="usa-collection__item">
+  <li class="usa-collection__item maxw-full">
+    <div class="usa-collection__body">
+      <h3 class="usa-collection__heading"><%= link_to "Stratum Data", strata_path, class: "usa-link" %></h3>
+      <p class="usa-collection__description">
+        Information on the number of primary sample units per stratum (NTOT), for each year and region, as well as the length to a side for primary sample units in each stratum (GRID_SIZE).
+      </p>
+    </div>
+  </li>
+  <li class="usa-collection__item maxw-full">
     <div class="usa-collection__body">
       <h3 class="usa-collection__heading"><%= link_to "Benthic Data", benthic_path, class: "usa-link" %></h3>
       <p class="usa-collection__description">
