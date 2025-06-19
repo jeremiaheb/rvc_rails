@@ -316,7 +316,7 @@
         password: '$6$OZl.q7ZgYzZIolON$HFXN04yl8qCRuq4KlE0DYRTCKnlEU6oK5krI70baHCDDceJDafoSTgP3elqGViCunFqf2gqC.syi/j/ZXZrP1/'
         shell: /bin/bash
       become: true
-      
+
     - name: make rvcrails directory world readable
       ansible.builtin.file:
         path: /var/www/apps/rvc_rails
@@ -345,6 +345,7 @@
         group: rvcrails
         mode: "0644"
       become: true
+      become_user: rvcrails
 
     - name: install deploy keys for rvcrails
       ansible.posix.authorized_key:
@@ -393,6 +394,52 @@
       ansible.builtin.command:
         cmd: "/var/www/apps/rvc_rails/.rbenv/bin/rbenv install 3.4.4"
         creates: "/var/www/apps/rvc_rails/.rbenv/versions/3.4.4"
+      become: true
+      become_user: rvcrails
+
+    - name: install nvm
+      ansible.builtin.git:
+        repo: "http://github.com/nvm-sh/nvm"
+        dest: "/var/www/apps/rvc_rails/.nvm"
+        version: "v0.40.3"
+        recursive: false
+      become: true
+      become_user: rvcrails
+
+    - name: add nvm init to ~/.bashrc
+      ansible.builtin.blockinfile:
+        path: "/var/www/apps/rvc_rails/.bashrc"
+        marker: "# {mark} ANSIBLE MANAGED NVM INIT"
+        block: |
+          source "$HOME/.nvm/nvm.sh"
+      become: true
+      become_user: rvcrails
+
+    - name: add nvm init as rbenv exec hook
+      ansible.builtin.copy:
+        dest: "/var/www/apps/rvc_rails/.rbenv/rbenv.d/exec/nvm.bash"
+        content: |
+          source "$HOME/.nvm/nvm.sh"
+      become: true
+      become_user: rvcrails
+
+    - name: install node 22.16.0
+      ansible.builtin.shell: |
+        . "$HOME/.nvm/nvm.sh" --no-use
+        nvm install 22.16.0
+      args:
+        executable: /usr/bin/bash
+        creates: "/var/www/apps/rvc_rails/.nvm/versions/node/v22.16.0"
+      become: true
+      become_user: rvcrails
+
+    - name: install yarn package manager
+      community.general.npm:
+        name: yarn
+        version: "1.22.22"
+        global: true
+      environment:
+        PATH: "/var/www/apps/rvc_rails/.nvm/versions/node/v22.16.0/bin:{{ ansible_env.PATH }}"
       become: true
       become_user: rvcrails
 
