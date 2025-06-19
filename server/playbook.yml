@@ -461,7 +461,7 @@
           Group=rvcrails
           WorkingDirectory=/var/www/apps/rvc_rails/current
           Environment=RAILS_ENV=production BIND_ADDRESS=unix://./tmp/sockets/puma.sock
-          ExecStart=/var/www/apps/rvc_rails/.rbenv/bin/rbenv exec bundle exec thrust bin/rails server
+          ExecStart=/var/www/apps/rvc_rails/.rbenv/bin/rbenv exec bundle exec bin/rails server
           ExecReload=/bin/kill -USR1 $MAINPID
           RestartSec=1
           Restart=on-failure
