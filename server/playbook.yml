@@ -207,10 +207,15 @@
       become: true
       become_user: postgres
 
-    - name: create rvcrails_production database
+    - name: create rvcrails_production databases
       community.postgresql.postgresql_db:
-        name: rvcrails_production
+        name: "{{ item }}"
         owner: rvcrails_production
+      with_items:
+        - "rvcrails_production"
+        - "rvcrails_production_cable"
+        - "rvcrails_production_cache"
+        - "rvcrails_production_queue"
       become: true
       become_user: postgres
 
