@@ -44,4 +44,6 @@ Vagrant.configure("2") do |config|
     t.info = "Mounting /vagrant/node_modules"
     t.run_remote = {inline: "sudo mount /vagrant/node_modules"}
   end
+
+  config.ssh.forward_agent = true
 end
