@@ -2,7 +2,7 @@
 lock "~> 3.19.2"
 
 set :application, "rvc_rails"
-set :repo_url, "git@example.com:jeremiaheb/rvc_rails.git"
+set :repo_url, "git@github.com:jeremiaheb/rvc_rails.git"
 
 # Default branch is :master
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
