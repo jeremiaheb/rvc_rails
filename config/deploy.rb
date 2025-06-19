@@ -50,10 +50,6 @@ namespace :deploy do
         unless test("test -f #{shared_path}/config/master.key")
           upload! "config/master.key", "#{shared_path}/config/master.key"
         end
-
-        unless test("test -f #{shared_path}/config/credentials/production.key")
-          upload! "config/credentials/production.key", "#{shared_path}/config/credentials/production.key"
-        end
       end
     end
   end
