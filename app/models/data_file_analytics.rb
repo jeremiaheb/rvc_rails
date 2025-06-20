@@ -8,17 +8,19 @@ class DataFileAnalytics < ApplicationRecord
 
   def self.increment_count(date:, ip_address:, data_type:, year:, region:, format:)
     tries ||= 0
-    record = find_or_create_by!(
-      date: date,
-      ip_address: ip_address,
-      data_type: data_type.strip.downcase,
-      year: year,
-      region: region.strip.upcase,
-      format: format.strip.downcase,
-    )
+    transaction do
+      record = find_or_create_by!(
+        date: date,
+        ip_address: ip_address,
+        data_type: data_type.strip.downcase,
+        year: year,
+        region: region.strip.upcase,
+        format: format.strip.downcase,
+      )
 
-    # Atomic increment
-    update_counters(record.id, count: +1)
+      # Atomic increment
+      update_counters(record.id, count: 1)
+    end
   rescue ActiveRecord::RecordNotUnique => e
     # On retry, the existing record should be found
     retry if (tries += 1) == 1
