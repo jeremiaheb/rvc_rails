@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_20_173916) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_20_185157) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -24,6 +24,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_20_173916) do
     t.integer "count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["date", "ip_address", "data_type", "year", "region", "format"], name: "idx_on_date_ip_address_data_type_year_region_format_cac4cfbfe9", unique: true
+    t.index ["date", "data_type", "year", "region", "format", "ip_address"], name: "idx_on_date_data_type_year_region_format_ip_address_b56a72723a", unique: true
   end
 end
