@@ -4,7 +4,7 @@
 
 ### Adding Sample (AR) Data
 
-1. Create a csv (comma seperated values) file of analysis ready data (AR2.0). Use the [analysisready package](https://github.com/harryganz/analysisready) if necessary. Each file should contain sample data for all species in a given year and region. **DO NOT** include more than one year or region in an individual AR2.0 file.
+1. Create a csv (comma seperated values) file of analysis ready data (AR2.0). Use the [analysisready package](https://github.com/jeremiaheb/analysisready) if necessary. Each file should contain sample data for all species in a given year and region. **DO NOT** include more than one year or region in an individual AR2.0 file.
 1. Compress each file into a zip file. **DO NOT** include more than one csv in a zip file.
 1. Rename the csv and zip files to match the following convention: &lt;region\_abbreviation&gt;&lt;year&gt;.&lt;file\_extension&gt;. The region abbreviations are: fk - Florida Keys, dt - Dry Tortugas, sefcri - Southeast Florida Coral Reef Initiative. For example, sample data from the Florida Keys in 2012 in zip format will be names "fk2012.zip". Sample data from 2004 in the Dry Tortugas in csv format will be names "dt2004.csv". **NOTE**: Each region/year should have two files: a csv file, and a zip file.
 1. Place the csv and zip files directly into the <public/data/sample_data> subdirectory of this Rails application.
