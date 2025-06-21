@@ -47,4 +47,4 @@ To setup the Rails application, run:
 bin/setup
 ```
 
-The development server will start and be available at <http://localhost:3000/rvc_analysis20>.
+The development server will start and be available at <http://localhost:3000/>.
