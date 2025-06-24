@@ -360,6 +360,7 @@
       with_items:
         # GitHub usernames
         - "alindeman-NOAA"
+        - "jeremiaheb"
 
     - name: install rbenv
       ansible.builtin.git:
