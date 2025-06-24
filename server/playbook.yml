@@ -8,18 +8,6 @@
         state: started
       become: true
 
-    # We occasionally see timeouts of this service when using virtualized
-    # network interfaces. It does not always happen, but when it does, it makes
-    # the boot take a very long time.
-    #
-    # At some point in the future it may be good to remove this and see if the
-    # problem still exists.
-    - name: disable waiting for network on boot
-      ansible.builtin.service:
-        name: systemd-networkd-wait-online
-        enabled: false
-      become: true
-
     - name: set hostname
       ansible.builtin.hostname:
         name: rvcrails.nmfs.noaa.gov
@@ -464,6 +452,19 @@
           - ubuntu-desktop
       become: true
       when: development_build is defined and skip_desktop is undefined
+
+    # We occasionally see timeouts of this service when using virtualized
+    # network interfaces. It does not always happen, but when it does, it makes
+    # the boot take a very long time.
+    #
+    # At some point in the future it may be good to remove this and see if the
+    # problem still exists.
+    - name: disable waiting for network on boot
+      ansible.builtin.service:
+        name: systemd-networkd-wait-online
+        enabled: false
+      become: true
+      when: development_build is defined
 
     - name: install rbenv
       ansible.builtin.git:
