@@ -436,9 +436,13 @@
         dest: /etc/sudoers.d/rvcrails
         content: |
           rvcrails ALL=(ALL) NOPASSWD: /usr/bin/systemctl start rvcrails
+          rvcrails ALL=(ALL) NOPASSWD: /bin/systemctl start rvcrails
           rvcrails ALL=(ALL) NOPASSWD: /usr/bin/systemctl stop rvcrails
+          rvcrails ALL=(ALL) NOPASSWD: /bin/systemctl stop rvcrails
           rvcrails ALL=(ALL) NOPASSWD: /usr/bin/systemctl reload rvcrails
+          rvcrails ALL=(ALL) NOPASSWD: /bin/systemctl reload rvcrails
           rvcrails ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart rvcrails
+          rvcrails ALL=(ALL) NOPASSWD: /bin/systemctl restart rvcrails
         owner: root
         group: root
         mode: "0440"
