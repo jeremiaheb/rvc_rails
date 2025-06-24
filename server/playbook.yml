@@ -387,7 +387,7 @@
         . "$HOME/.nvm/nvm.sh" --no-use
         nvm install 22.16.0
       args:
-        executable: /usr/bin/bash
+        executable: /bin/bash
         creates: "/var/www/apps/rvc_rails/.nvm/versions/node/v22.16.0"
       become: true
       become_user: rvcrails
@@ -520,7 +520,7 @@
         . "$HOME/.nvm/nvm.sh" --no-use
         nvm install 22.16.0
       args:
-        executable: /usr/bin/bash
+        executable: /bin/bash
         creates: "{{ ansible_user_dir }}/.nvm/versions/node/v22.16.0"
       when: development_build is defined
 
