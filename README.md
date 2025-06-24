@@ -48,3 +48,36 @@ bin/setup
 ```
 
 The development server will start and be available at <http://localhost:3000/>.
+
+## Deployment
+
+[Capistrano](https://capistranorb.com/) is used to deploy the code to servers over SSH.
+
+[Create an SSH key](https://cloud.google.com/compute/docs/connect/create-ssh-keys#windows-10-or-later) if you have not already done so.
+
+Next, add the key to an agent running locally. Open a terminal (Git Bash on Windows) and run:
+
+```bash
+eval $(ssh-agent); ssh-add
+```
+
+Within this same terminal, login to the virtual machine:
+
+```bash
+vagrant ssh
+```
+
+Verify the key is available within the virtual machine:
+
+```bash
+ssh-add -L
+# long, random public key should print
+```
+
+With the key available to be used by Capistrano, run:
+
+```
+bin/cap production deploy
+```
+
+You will be prompted for a branch name, which defaults to the current branch. If that is what you want to deploy, simply hit &lt;enter&gt;.
