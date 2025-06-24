@@ -402,6 +402,30 @@
       become: true
       become_user: rvcrails
 
+    - name: create systemd socket for rvcrails
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/rvcrails.socket
+        content: |
+          [Unit]
+          Description=rvc_rails
+
+          [Socket]
+          ListenStream=/var/www/apps/rvc_rails/shared/tmp/sockets/puma.sock
+          SocketUser=rvcrails
+          SocketGroup=rvcrails
+          ReusePort=true
+          Backlog=1024
+
+          [Install]
+          WantedBy=sockets.target
+      become: true
+
+    - name: enable systemd socket for rvcrails
+      ansible.builtin.service:
+        name: rvcrails.socket
+        enabled: true
+      become: true
+
     - name: create systemd service for rvcrails
       ansible.builtin.copy:
         dest: /etc/systemd/system/rvcrails.service
@@ -409,14 +433,14 @@
           [Unit]
           Description=rvc_rails
           After=network.target
+          Requires=rvcrails.socket
 
           [Service]
           User=rvcrails
           Group=rvcrails
           WorkingDirectory=/var/www/apps/rvc_rails/current
-          Environment=RAILS_ENV=production BIND_ADDRESS=unix://./tmp/sockets/puma.sock
-          ExecStart=/var/www/apps/rvc_rails/.rbenv/bin/rbenv exec bundle exec bin/rails server
-          ExecReload=/bin/kill -USR1 $MAINPID
+          Environment=RAILS_ENV=production
+          ExecStart=/var/www/apps/rvc_rails/.rbenv/bin/rbenv exec bundle exec puma -C /var/www/apps/rvc_rails/current/config/puma.rb --bind-to-activated-sockets=only
           RestartSec=1
           Restart=on-failure
 
@@ -427,7 +451,7 @@
 
     - name: enable systemd service for rvcrails
       ansible.builtin.service:
-        name: rvcrails
+        name: rvcrails.service
         enabled: true
       become: true
 
@@ -435,14 +459,14 @@
       ansible.builtin.copy:
         dest: /etc/sudoers.d/rvcrails
         content: |
-          rvcrails ALL=(ALL) NOPASSWD: /usr/bin/systemctl start rvcrails
-          rvcrails ALL=(ALL) NOPASSWD: /bin/systemctl start rvcrails
-          rvcrails ALL=(ALL) NOPASSWD: /usr/bin/systemctl stop rvcrails
-          rvcrails ALL=(ALL) NOPASSWD: /bin/systemctl stop rvcrails
-          rvcrails ALL=(ALL) NOPASSWD: /usr/bin/systemctl reload rvcrails
-          rvcrails ALL=(ALL) NOPASSWD: /bin/systemctl reload rvcrails
-          rvcrails ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart rvcrails
-          rvcrails ALL=(ALL) NOPASSWD: /bin/systemctl restart rvcrails
+          rvcrails ALL=(ALL) NOPASSWD: /usr/bin/systemctl start rvcrails.service
+          rvcrails ALL=(ALL) NOPASSWD: /bin/systemctl start rvcrails.service
+          rvcrails ALL=(ALL) NOPASSWD: /usr/bin/systemctl stop rvcrails.service
+          rvcrails ALL=(ALL) NOPASSWD: /bin/systemctl stop rvcrails.service
+          rvcrails ALL=(ALL) NOPASSWD: /usr/bin/systemctl reload rvcrails.service
+          rvcrails ALL=(ALL) NOPASSWD: /bin/systemctl reload rvcrails.service
+          rvcrails ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart rvcrails.service
+          rvcrails ALL=(ALL) NOPASSWD: /bin/systemctl restart rvcrails.service
         owner: root
         group: root
         mode: "0440"

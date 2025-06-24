@@ -57,17 +57,8 @@ namespace :deploy do
   desc "Restart the application via its systemd service"
   task :restart do
     on roles(:web), in: :sequence do
-      execute "sudo", "systemctl", "restart", "rvcrails"
+      execute "sudo", "systemctl", "restart", "rvcrails.service"
     end
   end
-
-  desc "Reload (code reload only) the application via its systemd service"
-  task :reload do
-    on roles(:web), in: :sequence do
-      # Must be on a single line; otherwise capistrano/sshkit will add
-      # semicolons at the end of every newline 🤦🏻
-      execute "systemctl is-active rvcrails >/dev/null 2>&1 && sudo systemctl reload rvcrails || sudo systemctl start rvcrails"
-    end
-  end
-  after "deploy:finishing", "deploy:reload"
+  after "deploy:finishing", "deploy:restart"
 end
