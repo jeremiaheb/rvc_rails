@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
     # Record analytics
     DataFileAnalytics.increment_count(
       date: Date.current,
-      ip_address: request.remote_ip,
+      ip_address: request.headers["True-Client-IP"].presence || request.remote_ip,
       data_type: type,
       region: region.to_s,
       year: year.to_i,
