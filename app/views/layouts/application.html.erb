@@ -1,21 +1,45 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>RVC | Data Portal</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <script src="//dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&amp;subagency=NOAA" id="_fed_an_ua_tag"></script>
-</head>
-<body>
-  <div class="container">
-    <div class="page-header">
-      <h1> <%= link_to 'National Coral Reef Monitoring Program', controller: 'home',
-      action: 'index' %> </h1>
-    </div>
-    <div class="main">
+  <head>
+    <title><%= content_for(:title) || "RVC | Data Portal" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+
+    <%- if Rails.env.production? %>
+    <script src="//dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&amp;subagency=NOAA" id="_fed_an_ua_tag"></script>
+    <%- end %>
+  </head>
+
+  <body>
+    <div class="usa-overlay"></div>
+    <header class="usa-header usa-header--basic">
+      <div class="usa-nav-container">
+        <div class="usa-logo">
+          <em class="usa-logo__text"><%= link_to "National Coral Reef Monitoring Program", root_path %></em>
+          <button type="button" class="usa-menu-btn">Menu</button>
+      </div>
+      <nav class="usa-nav">
+        <ul class="usa-nav__primary usa-accordion">
+          <li class="usa-nav__primary-item">
+            <%= link_to "SEFSC Website", "https://www.sefsc.noaa.gov", class: "usa-nav-link" %>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main id="main-content">
       <%= yield %>
-    </div>
-  </div>
-</body>
+    </main>
+  </body>
 </html>

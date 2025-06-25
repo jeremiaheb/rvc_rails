@@ -1,39 +1,45 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :exception
+  protected
 
-  def invalid_format
-    raise ActionController::RoutingError.new('Invalid Format or Parameters')
-  end
+  # Send a data file to the client using parameters in the request
+  def send_data_file(type: params[:controller].singularize, region: params[:region], year: params[:year], format: params[:format])
+    # Allow caching but require revalidation from public caches
+    #
+    # See:
+    # - https://github.com/rails/rails/blob/2994a6cd4a4c0bc017ec39d23a58be7fc52c9f79/actionpack/lib/action_dispatch/http/cache.rb#L340-L354
+    # - https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control
+    response.cache_control.replace(
+      no_cache: false,
+      no_store: false,
+      # Maximum length of time for private (e.g., browser) caches
+      max_age: 1.hour,
+      # Maximum length of time for public (e.g., CDN) caches
+      public: true,
+      extras: ["s-maxage=0"],
+      stale_while_revalidate: 7.days,
+      stale_if_error: 7.days,
+    )
 
-  def file_not_found
-    raise ActionController::RoutingError.new('File Not Found')
-  end
-
-  ## If unknown format or file requested, respond with 404
-  rescue_from ActionController::UnknownFormat, :with => :invalid_format
-  rescue_from ActionController::MissingFile, :with => :file_not_found
-
-  def index(model)
-    @domains = model.domains
-    @year = query_params[:year]
-    @region = query_params[:region]
-    has_params = @year && @region
-    respond_to do |format|
-      format.html
-      format.csv {
-        send_file model.getPath(@region.to_s, @year.to_i, 'csv')
-      } if has_params
-      format.zip {
-        send_file model.getPath(@region.to_s, @year.to_i, 'zip')
-      } if has_params && model == Sample
-    end
-  end
-
-  private
-    def query_params
-      params.permit(:year, :region)
+    case type
+    when "taxa"
+      send_file File.join(Rails.configuration.x.data_file_path, "taxonomic_data", "taxonomic_data.csv")
+    else
+      data_file = DataFile.new(type, region, year, format)
+      send_file data_file.path
     end
 
+    # Record analytics
+    DataFileAnalytics.increment_count(
+      date: Date.current,
+      ip_address: request.headers["True-Client-IP"].presence || request.remote_ip,
+      data_type: type,
+      region: region.to_s,
+      year: year.to_i,
+      format: format.to_s,
+    )
+  rescue DataFile::Error => e
+    render plain: e.message, status: :forbidden, content_type: "text/plain"
+  rescue ActionController::MissingFile, ActionController::UnknownFormat => e
+    render plain: "File not found", status: :not_found, content_type: "text/plain"
+  end
 end

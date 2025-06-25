@@ -1,22 +1,39 @@
-<%= link_to '<< Data Portal Home', controller: :home, action: :index %>
-<h3>Taxonomic Data</h3>
-<p> Taxonomic and life history data for all species in the Reef Visual Census. To download,
-  click the download button. Available as a comma-separated values file (csv).
-</p>
-<%= form_tag taxa_path(format: 'csv'),  method: "get",
-target: '_blank', class: "data-form form-inline" do %>
-  <%= submit_tag 'Download', class: 'btn btn-default' %>
-<% end %>
-<h3>Variables</h3>
-<ol>
-  <li>SPECIES_CD: The first three letters of the generic name and first four
-  of the specific name.</li>
-  <li>FAMILY: The family name.</li>
-  <li>SCINAME: The scientific name.</li>
-  <li>COMNAME: The common name.</li>
-  <li>LC: Minimum length at capture, in centimeters.</li>
-  <li>LM: Median length at maturity, in centimeters.</li>
-  <li>WLEN_A: The linear coefficient of the allometric growth equation in
-  grams per millimeter (g/mm)</li>
-  <li>WLEN_B: The exponential coefficient of the allometric growth equation.</li>
-</ol>
+<section class="usa-section grid-container">
+  <%= render "shared/breadcrumbs", links: [["Taxonomic Data", taxa_path]] %>
+
+  <h1>Taxonomic Data</h1>
+  <p class="usa-prose">
+    Taxonomic and life history data for all species in the Reef Visual Census. To download, click the download button. Available as a comma-separated values file (csv).
+  </p>
+
+  <%= form_tag taxa_path, method: "get", target: '_blank', class: "usa-form usa-form--large" do %>
+    <fieldset class="usa-fieldset display-flex">
+      <div class="width-10">
+        <%= hidden_field_tag :format, "csv" %>
+      </div>
+    </fieldset>
+    <div class="display-flex">
+      <%= submit_tag "Download", id: "download-button", class: "usa-button" %>
+    </div>
+  <% end %>
+
+  <table class="usa-table">
+    <caption>Variables</caption>
+    <thead>
+      <tr>
+        <th scope="col">Variable</th>
+        <th scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><th scope="row">SPECIES_CD</th><td>The first three letters of the generic name and first four of the specific name.</td></tr>
+      <tr><th scope="row">FAMILY</th><td>The family name.</td></tr>
+      <tr><th scope="row">SCINAME</th><td>The scientific name.</td></tr>
+      <tr><th scope="row">COMNAME</th><td>The common name.</td></tr>
+      <tr><th scope="row">LC</th><td>Minimum length at capture, in centimeters.</td></tr>
+      <tr><th scope="row">LM</th><td>Median length at maturity, in centimeters.</td></tr>
+      <tr><th scope="row">WLEN_A</th><td>The linear coefficient of the allometric growth equation in grams per millimeter (g&sol;mm)</td></tr>
+      <tr><th scope="row">WLEN_B</th><td>The exponential coefficient of the allometric growth equation.</td></tr>
+    </tbody>
+  </table>
+</section>
