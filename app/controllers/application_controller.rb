@@ -3,6 +3,23 @@ class ApplicationController < ActionController::Base
 
   # Send a data file to the client using parameters in the request
   def send_data_file(type: params[:controller].singularize, region: params[:region], year: params[:year], format: params[:format])
+    # Allow caching but require revalidation from public caches
+    #
+    # See:
+    # - https://github.com/rails/rails/blob/2994a6cd4a4c0bc017ec39d23a58be7fc52c9f79/actionpack/lib/action_dispatch/http/cache.rb#L340-L354
+    # - https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control
+    response.cache_control.replace(
+      no_cache: false,
+      no_store: false,
+      # Maximum length of time for private (e.g., browser) caches
+      max_age: 1.hour,
+      # Maximum length of time for public (e.g., CDN) caches
+      public: true,
+      extras: ["s-maxage=0"],
+      stale_while_revalidate: 7.days,
+      stale_if_error: 7.days,
+    )
+
     case type
     when "taxa"
       send_file File.join(Rails.configuration.x.data_file_path, "taxonomic_data", "taxonomic_data.csv")

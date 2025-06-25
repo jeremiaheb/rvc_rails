@@ -12,6 +12,7 @@ class SamplesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 200, @response.status
     assert_equal "text/csv", @response.content_type
     assert_equal File.binread(Rails.root.join("test/data/sample_data/fgb2024.csv")), @response.body
+    assert_match /s-maxage=0/, @response.headers["Cache-Control"]
   end
 
   test "sends a ZIP for a valid region/year combination" do
@@ -28,6 +29,21 @@ class SamplesControllerTest < ActionDispatch::IntegrationTest
     record = DataFileAnalytics.find_by!(
       date: Date.current,
       ip_address: "127.0.0.1",
+      data_type: "sample",
+      year: 2024,
+      format: "zip",
+    )
+    assert_equal 1, record.count
+  end
+
+  test "records analytics behind a proxy" do
+    get samples_url(region: "FGBNMS", year: "2024", format: "zip"), headers: {
+      "True-Client-IP": "192.0.2.1"
+    }
+
+    record = DataFileAnalytics.find_by!(
+      date: Date.current,
+      ip_address: "192.0.2.1",
       data_type: "sample",
       year: 2024,
       format: "zip",

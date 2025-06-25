@@ -12,6 +12,7 @@ class TaxaControllerTest < ActionDispatch::IntegrationTest
     assert_equal 200, @response.status
     assert_equal "text/csv", @response.content_type
     assert_equal File.binread(Rails.root.join("test/data/taxonomic_data/taxonomic_data.csv")), @response.body
+    assert_match /s-maxage=0/, @response.headers["Cache-Control"]
   end
 
   test "sends a 406 Not Acceptable error if a ZIP file is requested" do
