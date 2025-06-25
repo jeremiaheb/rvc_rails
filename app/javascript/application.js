@@ -22,19 +22,18 @@ $(function() {
     // hidden field before disabling the select.
     $regionHidden.val(regionValue);
 
-    const availableYears = new Set($yearSelect.
+    const availableYears = Array.from($yearSelect.
       data("domains").
       filter((el) => { return el.region == regionValue }).
       map((el) => { return el.year })
     );
+    availableYears.sort();
 
-    $yearSelect.find("option").each((idx, el) => {
-      const val = $(el).val();
-      if (val === "" || availableYears.has(parseInt(val))) {
-        $(el).show();
-      } else {
-        $(el).hide();
-      }
+    // Unfortunately show() and hide() do not work for <option> in Safari and
+    // IE. Remove all the options and re-create them for available years.
+    $yearSelect.find("option[value!='']").remove(); // keep include_blank item
+    availableYears.forEach((year) => {
+      $("<option>").val(year).text(year).appendTo($yearSelect);
     });
     $yearSelect.val("");
 
