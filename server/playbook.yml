@@ -478,13 +478,6 @@
     # tasks are skipped because they are meaningless for the production virtual
     # machine, which is not used with Vagrant.
     # --------------------------
-    - name: install desktop environment
-      ansible.builtin.package:
-        name:
-          - slim
-          - ubuntu-desktop
-      become: true
-      when: development_build is defined and skip_desktop is undefined
 
     # We occasionally see timeouts of this service when using virtualized
     # network interfaces. It does not always happen, but when it does, it makes
