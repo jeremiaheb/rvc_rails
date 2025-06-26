@@ -77,6 +77,14 @@ bin/rails test test/controllers/samples_controller_test.rb
 
 ### Common Issues and Solutions
 
+#### `vagrant up` fails
+
+If it looks like a temporary error (e.g., Internet or Wifi blipped), simply run the command again with the `--provision` flag until it succeeds:
+
+```bash
+vagrant up --provision
+```
+
 #### "Could not find ... in locally installed gems"
 
 New versions of gem dependencies need to be downloaded and installed. Run:
@@ -86,6 +94,22 @@ bundle install
 ```
 
 And then retry the command.
+
+#### Vagrant VM
+
+It is always possible to rebuild the virtual machine from scratch if all else fails.
+
+Open a terminal (Git Bash on Windows) and run:
+
+```bash
+vagrant destroy
+```
+
+Followed by:
+
+```bash
+vagrant up --provision
+```
 
 ## Deployment
 
