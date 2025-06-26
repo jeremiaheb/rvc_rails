@@ -49,6 +49,12 @@ bin/setup
 
 The development server will start and be available at <http://localhost:3000/>.
 
+To stop the development server and shut down the virtual machine, press &lt;Ctrl C&gt; and run:
+
+```bash
+vagrant halt
+```
+
 ## Deployment
 
 [Capistrano](https://capistranorb.com/) is used to deploy the code to servers over SSH.
@@ -70,8 +76,8 @@ vagrant ssh
 Verify the key is available within the virtual machine:
 
 ```bash
-ssh-add -L
 # long, random public key should print
+ssh-add -L
 ```
 
 With the key available to be used by Capistrano, run:
