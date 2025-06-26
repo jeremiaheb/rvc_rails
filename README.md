@@ -55,6 +55,38 @@ To stop the development server and shut down the virtual machine, press &lt;Ctrl
 vagrant halt
 ```
 
+### Test Suite
+
+Login to the virtual machine, if not already:
+
+```bash
+vagrant ssh
+```
+
+To run the entire test suite, run:
+
+```bash
+bin/rails test
+```
+
+To run a particular test file, run (for example):
+
+```bash
+bin/rails test test/controllers/samples_controller_test.rb
+```
+
+### Common Issues and Solutions
+
+#### "Could not find ... in locally installed gems"
+
+New versions of gem dependencies need to be downloaded and installed. Run:
+
+```bash
+bundle install
+```
+
+And then retry the command.
+
 ## Deployment
 
 [Capistrano](https://capistranorb.com/) is used to deploy the code to servers over SSH.
