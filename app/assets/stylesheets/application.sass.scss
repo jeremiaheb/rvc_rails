@@ -2,3 +2,13 @@
 @forward "uswds-theme";
 @forward "uswds";
 @forward "uswds-theme-custom-styles";
+
+.display-none {
+  display: none;
+}
+
+.scrollable-tally {
+  max-height: 40vh; /* Or any other height you prefer */
+  overflow-y: auto;
+  top: 20px; /* Adjust as needed */
+}
