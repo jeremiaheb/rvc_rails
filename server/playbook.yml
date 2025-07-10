@@ -1,6 +1,57 @@
 - name: provision server
   hosts: '*'
   tasks:
+    - name: gather service facts
+      ansible.builtin.service_facts:
+
+    - name: remove cloud-init ssh configuration
+      ansible.builtin.file:
+        path: "/etc/ssh/sshd_config.d/50-cloud-init.conf"
+        state: absent
+      become: true
+
+    - name: remove cloud-init profile configuration
+      ansible.builtin.file:
+        path: "/etc/profile.d/Z99-cloudinit-warnings.sh"
+        state: absent
+      become: true
+
+    - name: remove cloud-init netplan configuration
+      ansible.builtin.file:
+        path: "/etc/netplan/50-cloud-init.yaml"
+        state: absent
+      become: true
+
+    - name: detect cloud-init configuration
+      ansible.builtin.stat:
+        path: "/etc/cloud/cloud.cfg.d"
+      register: cloud_cfg_d
+
+    - name: disable cloud-init network configuration
+      ansible.builtin.copy:
+        dest: "/etc/cloud/cloud.cfg.d/99-disable-network-config.cfg"
+        content: |
+          network:
+            config: disabled
+      become: true
+      when: "cloud_cfg_d.stat.exists and cloud_cfg_d.stat.isdir"
+
+    - name: disable cloud-init
+      ansible.builtin.service:
+        name: cloud-init
+        enabled: false
+        state: stopped
+      become: true
+      when: "'cloud-init.service' in ansible_facts.services"
+
+    - name: disable cloud-init-local
+      ansible.builtin.service:
+        name: cloud-init-local
+        enabled: false
+        state: stopped
+      become: true
+      when: "'cloud-init-local.service' in ansible_facts.services"
+
     - name: enable ssh server
       ansible.builtin.service:
         name: ssh
@@ -54,14 +105,6 @@
         enabled: true
       become: true
 
-    - name: allow ssh-rsa key authentication
-      ansible.builtin.copy:
-        dest: /etc/ssh/sshd_config.d/80-ssh-rsa-pubkey-settings.conf
-        content: |
-          PubkeyAcceptedAlgorithms +ssh-rsa
-      become: true
-      notify: restart sshd
-
     - name: install required packages
       ansible.builtin.package:
         name:
@@ -71,6 +114,7 @@
           - libpq-dev
           - libyaml-dev
           - sendmail
+          - unzip
           - zlib1g-dev
       become: true
 
@@ -279,6 +323,8 @@
       ansible.builtin.file:
         path: /var/www/apps/rvc_rails
         mode: "0755"
+        owner: rvcrails
+        group: rvcrails
         state: "directory"
       become: true
 
@@ -286,6 +332,8 @@
       ansible.builtin.file:
         path: "{{ item }}"
         mode: "0755"
+        owner: rvcrails
+        group: rvcrails
         state: "directory"
       become: true
       with_items:
@@ -439,7 +487,7 @@
           User=rvcrails
           Group=rvcrails
           WorkingDirectory=/var/www/apps/rvc_rails/current
-          Environment=RAILS_ENV=production
+          Environment=RAILS_ENV=production RAILS_LOG_TO_STDOUT=true
           ExecStart=/var/www/apps/rvc_rails/.rbenv/bin/rbenv exec bundle exec puma -C /var/www/apps/rvc_rails/current/config/puma.rb --bind-to-activated-sockets=only
           RestartSec=1
           Restart=on-failure
