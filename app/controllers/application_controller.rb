@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
       max_age: 1.hour,
       # Maximum length of time for public (e.g., CDN) caches
       public: true,
-      extras: ["s-maxage=0"],
+      extras: ["s-maxage=0", "must-revalidate", "proxy-revalidate"],
       stale_while_revalidate: 7.days,
       stale_if_error: 7.days,
     )
