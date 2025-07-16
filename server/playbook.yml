@@ -375,7 +375,7 @@
       ansible.builtin.git:
         repo: "https://github.com/rbenv/ruby-build"
         dest: "/var/www/apps/rvc_rails/.rbenv/plugins/ruby-build"
-        version: "v20250610"
+        version: "v20250716"
       become: true
       become_user: rvcrails
 
@@ -551,7 +551,7 @@
       ansible.builtin.git:
         repo: "https://github.com/rbenv/ruby-build"
         dest: "{{ ansible_user_dir }}/.rbenv/plugins/ruby-build"
-        version: "v20250610"
+        version: "v20250716"
       when: development_build is defined
 
     - name: add rbenv init to ~/.bashrc
