@@ -1,5 +1,8 @@
 # RVC Rails Backend
 
+[![Build Status](https://github.com/jeremiaheb/rvc_rails/actions/workflows/ci.yml/badge.svg)](https://github.com/jeremiaheb/rvc_rails/actions/workflows/ci.yml)
+[![Dependabot enabled](https://img.shields.io/badge/dependabot-enabled-025e8c?logo=Dependabot)](https://github.com/jeremiaheb/rvc_rails/security/dependabot)
+
 ## Adding Data
 
 ### Adding Sample (AR) Data
