@@ -12,18 +12,18 @@ class DataFile
     "STTSTJ" => "sttstj",
     "STX" => "stx",
     "PRICO" => "prico",
-    "FGBNMS" => "fgb"
+    "FGBNMS" => "fgb",
   }
 
   FOLDER_NAME_BY_TYPE = {
     "sample" => "sample_data",
     "stratum" => "stratum_data",
-    "benthic" => "benthic_data"
+    "benthic" => "benthic_data",
   }
 
   FILE_PREFIX_BY_TYPE = {
     "stratum" => "ntot_",
-    "benthic" => "benthic_"
+    "benthic" => "benthic_",
   }
 
   # See data_file_test.rb for examples

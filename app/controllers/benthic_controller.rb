@@ -1,7 +1,7 @@
 class BenthicController < ApplicationController
   def index
     @domains = [
-      {year: 2011, region: "FLA KEYS"}
+      { year: 2011, region: "FLA KEYS" },
     ]
 
     respond_to do |format|
