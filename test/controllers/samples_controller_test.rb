@@ -38,7 +38,7 @@ class SamplesControllerTest < ActionDispatch::IntegrationTest
 
   test "records analytics behind a proxy" do
     get samples_url(region: "FGBNMS", year: "2024", format: "zip"), headers: {
-      "True-Client-IP": "192.0.2.1"
+      "True-Client-IP": "192.0.2.1",
     }
 
     record = DataFileAnalytics.find_by!(

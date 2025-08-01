@@ -22,7 +22,7 @@ namespace :analytics do
           record.year,
           record.region,
           record.format,
-          record.count # Assuming you have a 'count' attribute
+          record.count, # Assuming you have a 'count' attribute
         ]
       end
     end
