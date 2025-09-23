@@ -8,7 +8,7 @@
   "dependencies": {
     "@uswds/uswds": "3.13.0",
     "jquery": "^3.7.1",
-    "sass": "^1.91.0"
+    "sass": "^1.93.1"
   },
   "devDependencies": {
     "esbuild": "^0.25.9",
