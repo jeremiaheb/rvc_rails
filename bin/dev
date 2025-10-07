@@ -11,6 +11,8 @@ export PORT="${PORT:-3000}"
 # Default to binding 0.0.0.0 if not specified and within Vagrant
 if [ "${USER:-}" = "vagrant" ]; then
   export BINDING="${BINDING:-0.0.0.0}"
+else
+  export BINDING="${BINDING:-127.0.0.1}"
 fi
 
-exec foreman start -f Procfile.dev --env /dev/null "$@"
+exec bin/rails server -b "$BINDING" "$@"
