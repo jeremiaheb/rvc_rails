@@ -26,92 +26,99 @@
 1. Rename the file to taxonomic\_data.csv
 1. Place the csv file directly into the [public/data/taxonomic_data](public/data/taxonomic_data) subdirectory of this Rails application.
 
-## Development
+## Development Setup
 
-[Vagrant](https://developer.hashicorp.com/vagrant) is used to ensure a consistent development environment using virtual machines.
+### Vagrant
 
-After installing Vagrant, open a terminal (Git Bash on Windows) and run:
+A [Vagrant](https://www.vagrantup.com) virtual machine (VM) is provided for local development. It runs the same Ansible provisioning as the production virtual machine, plus some additional commands that make it useful for development.
+
+First, [install Vagrant](https://developer.hashicorp.com/vagrant/install?product_intent=vagrant). Then from within a terminal, run:
 
 ```bash
-vagrant up --provision
+vagrant up
 ```
 
-This command will take a while the first time it is run. Subsequent runs will be quicker.
+> [!NOTE]
+> This command will take a while the first time it runs. Go for coffee or otherwise do something else for a while! It will not take nearly as long once it is setup for the first time.
 
-After it completes, login to the virtual machine:
+If anything fails to provision on the first run, it might be a temporary issue (e.g., Internet failure). You can safely run this command as many times as it takes to complete successfully:
+
+```bash
+vagrant provision
+```
+
+Once `vagrant up` or `vagrant provision` completes, you can get a shell on the VM with:
 
 ```bash
 vagrant ssh
 ```
 
-To setup the Rails application, run:
+To setup the application, within a `vagrant ssh` session, run:
 
 ```bash
 bin/setup
 ```
 
-The development server will start and be available at <http://localhost:3000/>.
-
-To stop the development server and shut down the virtual machine, press &lt;Ctrl C&gt; and run:
+Once `bin/setup` completes, start the server by running:
 
 ```bash
-vagrant halt
+bin/dev
 ```
 
-### Test Suite
+Once `bin/dev` is running, the application will be available at <http://localhost:3000>
 
-Login to the virtual machine, if not already:
+To start a Rails console, within a new `vagrant ssh` session, run:
 
 ```bash
-vagrant ssh
+bin/rails console
 ```
 
-To run the entire test suite, run:
+All typical `rake`, `rails`, `bundle`, etc commands can run this way.
+
+For example, to run the test suite:
 
 ```bash
 bin/rails test
 ```
 
-To run a particular test file, run (for example):
+To power off the machine without destroying it, within a terminal run:
 
 ```bash
-bin/rails test test/controllers/samples_controller_test.rb
+vagrant halt
 ```
 
-### Common Issues and Solutions
-
-#### `vagrant up` fails
-
-If it looks like a temporary error (e.g., Internet or Wifi blipped), simply run the command again with the `--provision` flag until it succeeds:
+To power it back up again, run:
 
 ```bash
 vagrant up --provision
 ```
 
-#### "Could not find ... in locally installed gems"
+### Testing
 
-New versions of gem dependencies need to be downloaded and installed. Run:
+See [Rails Guides: Testing Rails Applications](https://guides.rubyonrails.org/testing.html).
+
+To run the test suite, connect to the Vagrant VM (`vagrant ssh`) and run:
 
 ```bash
-bundle install
+bin/rails test
 ```
 
-And then retry the command.
-
-#### Vagrant VM
-
-It is always possible to rebuild the virtual machine from scratch if all else fails.
-
-Open a terminal (Git Bash on Windows) and run:
+To run the system tests (`tests/system`) which use a headless Chrome web browser to mimic real user interactions, run:
 
 ```bash
-vagrant destroy
+bin/rails test:system
 ```
 
-Followed by:
+### Code Formatting
+
+[Rubocop](https://github.com/rubocop/rubocop) and [Prettier](https://prettier.io/) are used to maintain a consistent code format.
+
+Most formatting errors can be automatically corrected by the tools themselves.
+
+To run Rubocop and Prettier _and_ autocorrect any issues if possible, connect to the Vagrant VM (`vagrant ssh`) and run:
 
 ```bash
-vagrant up --provision
+bin/lint --autocorrect
 ```
 
 ## Deployment
@@ -123,26 +130,71 @@ vagrant up --provision
 Next, add the key to an agent running locally. Open a terminal (Git Bash on Windows) and run:
 
 ```bash
-eval $(ssh-agent); ssh-add
+eval "$(ssh-agent)"; ssh-add
 ```
 
-Within this same terminal, login to the virtual machine:
+Within this same terminal, login to the Vagrant VM:
 
 ```bash
 vagrant ssh
 ```
 
-Verify the key is available within the virtual machine:
+Verify the key is available:
 
 ```bash
 # long, random public key should print
 ssh-add -L
 ```
 
-With the key available to be used by Capistrano, run:
+With the key available, run:
 
 ```
 bin/cap production deploy
 ```
 
 You will be prompted for a branch name, which defaults to the current branch. If that is what you want to deploy, simply hit &lt;enter&gt;.
+
+## Production Setup
+
+### Machine Build
+
+This repository builds and snapshots an Ubuntu-based virtual machine that is setup to host the application. It uses the same [Ansible playbook](./server/playbook.yml) as Vagrant (eliding some development tasks).
+
+To build the virtual machine, install [Packer](https://www.packer.io).
+
+Then from a terminal, run:
+
+``` bash
+packer build -force server
+```
+
+The VM will be snapshot into the `./server/output` directory. The VM will be left powered off in VirtualBox, but it can be powered back on for experimentation or use in development.
+
+### Ansible
+
+To run Ansible to provision an existing virtual machine (either one created `packer` above or a trusted Ubuntu cloud image), open a terminal (Git Bash on Windows) and run:
+
+```bash
+eval "$(ssh-agent)"; ssh-add
+```
+
+Within this same terminal, login to the Vagrant machine:
+
+```bash
+vagrant ssh
+```
+
+Direct Ansible to connect to the server at `IP_ADDR` and run the [playbook](./server/playbook.yml):
+
+```bash
+ansible-playbook --inventory IP_ADDR, --extra-vars ansible_user=USERNAME server/playbook.yml
+```
+
+Replace `IP_ADDR` and `USERNAME` with the IP address of the server and your username on the server, respectively. For example:
+
+```bash
+# NOTE: the comma after the IP address is intentional and required
+ansible-playbook --inventory 192.0.2.1, --extra-vars ansible_user=alindeman server/playbook.yml
+```
+
+To run the Ansible without actually changing anything, add the `--check` flag. To run the Ansible with more details about what did (or would) change, add the `--verbose` flag.
