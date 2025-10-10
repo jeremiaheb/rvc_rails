@@ -8,7 +8,7 @@ $(function () {
   const $yearSelect = $("#year-select");
   const $downloadButton = $("#download-button");
 
-  $("#region-select").on("input", (e) => {
+  $("#region-select").on("input change", (e) => {
     const regionValue = $regionSelect.val();
     if (regionValue === "") {
       return;
@@ -42,7 +42,7 @@ $(function () {
     $regionSelect.prop("disabled", true);
   });
 
-  $("#year-select").on("input", (e) => {
+  $("#year-select").on("input change", (e) => {
     const yearValue = $yearSelect.val();
     // Enable download button if non-blank year was selected
     $downloadButton.prop("disabled", yearValue === "");
