@@ -4,5 +4,9 @@
 Rails.application.config.assets.version = "1.0"
 
 # Add additional assets to the asset load path.
-Rails.application.config.assets.paths << Rails.root.join("node_modules/@uswds/uswds/dist/img").to_s
-Rails.application.config.assets.paths << Rails.root.join("node_modules/@uswds/uswds/dist/fonts").to_s
+Rails.application.config.assets.paths << Rails.root.join("node_modules")
+Rails.application.config.assets.paths << Rails.root.join("node_modules", "@uswds", "uswds", "dist", "img")
+Rails.application.config.assets.paths << Rails.root.join("node_modules", "@uswds", "uswds", "packages")
+
+# Serve assets individually in development
+Rails.application.config.assets.debug = Rails.env.development?

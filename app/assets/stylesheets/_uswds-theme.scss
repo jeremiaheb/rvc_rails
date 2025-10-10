@@ -7,9 +7,16 @@ in the form $setting: value,
 ----------------------------------------
 */
 
+// Refer to https://designsystem.digital.gov/documentation/settings/
 @use "uswds-core" with (
-  $theme-font-path: "",
-  $theme-image-path: "",
+  $theme-font-path: "@uswds/uswds/dist/fonts",
+  $theme-footer-max-width: "desktop",
+  $theme-grid-container-max-width: "desktop",
+  $theme-header-max-width: "desktop",
+  $theme-identifier-max-width: "desktop",
+  $theme-image-path: "@uswds/uswds/dist/img",
+  $theme-in-page-nav-main-content-max-width: "desktop",
   $theme-show-notifications: false,
+  $theme-site-margins-breakpoint: "desktop",
   $theme-site-margins-width: 2
 );
