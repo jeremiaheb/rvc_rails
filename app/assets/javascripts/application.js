@@ -2,7 +2,7 @@
 //= require jquery-ujs/src/rails
 //= require_self
 
-$(function() {
+$(function () {
   const $regionSelect = $("#region-select");
   const $regionHidden = $("#region-hidden");
   const $yearSelect = $("#year-select");
@@ -18,10 +18,15 @@ $(function() {
     // hidden field before disabling the select.
     $regionHidden.val(regionValue);
 
-    const availableYears = Array.from($yearSelect.
-      data("domains").
-      filter((el) => { return el.region == regionValue }).
-      map((el) => { return el.year })
+    const availableYears = Array.from(
+      $yearSelect
+        .data("domains")
+        .filter((el) => {
+          return el.region == regionValue;
+        })
+        .map((el) => {
+          return el.year;
+        }),
     );
     availableYears.sort();
 
