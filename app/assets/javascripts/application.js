@@ -1,11 +1,7 @@
-// Entry point for the build script in your package.json
-import jQuery from "jquery"
-window.jQuery = jQuery
-window.$ = jQuery
+//= require jquery/dist/jquery
+//= require jquery-ujs/src/rails
+//= require_self
 
-import "@uswds/uswds"
-
-// On document ready
 $(function() {
   const $regionSelect = $("#region-select");
   const $regionHidden = $("#region-hidden");
