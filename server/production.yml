@@ -1,0 +1,4 @@
+web:
+  hosts:
+    "rvcrails.nmfs.noaa.gov":
+      ansible_host: "155.206.222.146"
