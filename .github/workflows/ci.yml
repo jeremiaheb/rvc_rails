@@ -35,9 +35,11 @@ jobs:
           bundler-cache: true
 
       - name: Set up NodeJS
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
+          cache: yarn
+          cache-dependency-path: yarn.lock
 
       - name: Install NodeJS dependencies
         run: yarn install --frozen-lockfile
@@ -45,7 +47,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: "3"
+          python-version: "3.13"
 
       - name: Install Python dependencies
         run: pip install --requirement requirements.txt
@@ -83,9 +85,11 @@ jobs:
           bundler-cache: true
 
       - name: Set up NodeJS
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
+          cache: yarn
+          cache-dependency-path: yarn.lock
 
       - name: Install NodeJS dependencies
         run: yarn install --frozen-lockfile
@@ -98,7 +102,7 @@ jobs:
         run: bin/rails db:test:prepare test test:system
 
       - name: Keep screenshots from failed system tests
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: failure()
         with:
           name: screenshots
