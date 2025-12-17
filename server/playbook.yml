@@ -300,33 +300,43 @@
       become: true
       notify: Restart apache2
 
+    - name: Create port 8000 listener
+      ansible.builtin.copy:
+        dest: "/etc/apache2/conf-available/port-8000.conf"
+        mode: "0644"
+        content: |
+          Listen 8000
+      become: true
+      notify: Reload apache2
+
+    - name: Enable port 8000 listener
+      ansible.builtin.command:
+        cmd: "a2enconf port-8000"
+        creates: "/etc/apache2/conf-enabled/port-8000.conf"
+      become: true
+      notify: Reload apache2
+
     - name: Create rvcrails apache2 site
       ansible.builtin.copy:
         dest: "/etc/apache2/sites-available/rvcrails.conf"
         mode: "0644"
         content: |
-          Listen 8000
-          <VirtualHost *:80 *:8000>
-            # Static assets
-            <Directory "/var/www/apps/rvc_rails/shared/public">
-              Options FollowSymLinks
-              AllowOverride None
-              Require all granted
-            </Directory>
+          # Static assets
+          <Directory "/var/www/apps/rvc_rails/shared/public">
+            Options FollowSymLinks
+            AllowOverride None
+            Require all granted
+          </Directory>
 
-            ProxyPass "/rvc_analysis20/assets" "!"
-            Alias "/rvc_analysis20/assets" "/var/www/apps/rvc_rails/shared/public/rvc_analysis20/assets"
-            ProxyPass "/rvc_analysis20" "unix:////var/www/apps/rvc_rails/shared/tmp/sockets/puma.sock|http://localhost/rvc_analysis20"
-            ProxyPassReverse "/rvc_analysis20" "unix:////var/www/apps/rvc_rails/shared/tmp/sockets/puma.sock|http://localhost/rvc_analysis20"
+          ProxyPass "/rvc_analysis20/assets" "!"
+          Alias "/rvc_analysis20/assets" "/var/www/apps/rvc_rails/shared/public/rvc_analysis20/assets"
+          ProxyPass "/rvc_analysis20" "unix:////var/www/apps/rvc_rails/shared/tmp/sockets/puma.sock|http://localhost/rvc_analysis20"
+          ProxyPassReverse "/rvc_analysis20" "unix:////var/www/apps/rvc_rails/shared/tmp/sockets/puma.sock|http://localhost/rvc_analysis20"
 
-            # Assume TLS-terminating proxy when host is noaa.gov
-            <If "%{HTTP_HOST} =~ /\.noaa\.gov$/">
-              RequestHeader set X-Forwarded-Proto "https"
-            </If>
-
-            ErrorLog "${APACHE_LOG_DIR}/error.log"
-            CustomLog "${APACHE_LOG_DIR}/access.log" combined
-          </VirtualHost>
+          # Assume TLS-terminating proxy when host is noaa.gov
+          <If "%{HTTP_HOST} =~ /\.noaa\.gov$/">
+            RequestHeader set X-Forwarded-Proto "https"
+          </If>
       become: true
       notify: Reload apache2
 
