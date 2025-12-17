@@ -89,6 +89,6 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
   # Relative URL root
-  config.assets.prefix = "rvc_analysis20/assets"
+  config.assets.prefix = "/rvc_analysis20/assets"
   config.relative_url_root = "/rvc_analysis20"
 end
