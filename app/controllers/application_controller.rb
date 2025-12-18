@@ -22,10 +22,10 @@ class ApplicationController < ActionController::Base
 
     case type
     when "taxa"
-      send_file File.join(Rails.configuration.x.data_file_path, "taxonomic_data", "taxonomic_data.csv")
+      send_file_from_cloud_or_disk(File.join("taxonomic_data", "taxonomic_data.csv"))
     else
       data_file = DataFile.new(type, region, year, format)
-      send_file data_file.path
+      send_file_from_cloud_or_disk(data_file.path)
     end
 
     # Record analytics
@@ -41,5 +41,39 @@ class ApplicationController < ActionController::Base
     render plain: e.message, status: :forbidden, content_type: "text/plain"
   rescue ActionController::MissingFile, ActionController::UnknownFormat => e
     render plain: "File not found", status: :not_found, content_type: "text/plain"
+  end
+
+  # send_file_from_cloud_or_disk sends a data file from Google Cloud (if running
+  # on Google Cloud) or from disk otherwise
+  def send_file_from_cloud_or_disk(path)
+    stream = \
+      if running_on_google_cloud?
+        bucket = Google::Cloud::Storage.new(project_id: "ggn-nmfs-sencrmp-prod-1").bucket("ncrmp-bucket-storage")
+        file = bucket.file(File.join("rvc", "public", "data", path))
+        raise ActionController::MissingFile if file.nil?
+
+        file.download
+      else
+        File.open(File.join(Rails.configuration.x.data_file_path, path), "rb")
+      end
+
+    set_file_response_headers(path)
+    self.response_body = stream
+  rescue Errno::ENOENT
+    raise ActionController::MissingFile
+  end
+
+  def set_file_response_headers(path)
+    filename = File.basename(path)
+
+    self.content_type = Mime::Type.lookup_by_extension(File.extname(filename).downcase.delete("."))
+    response.sending_file = true
+    response.headers["Content-Disposition"] = ActionDispatch::Http::ContentDisposition.format(disposition: "attachment", filename: filename)
+    response.headers["Content-Transfer-Encoding"] = "binary"
+  end
+
+  # Returns true if running on Google Cloud
+  def running_on_google_cloud?
+    File.exist?("/etc/google_instance_id") || ENV.fetch("FORCE_GOOGLE_CLOUD", false)
   end
 end

@@ -15,6 +15,9 @@ gem "sprockets-rails"
 gem "dartsass-sprockets", "~> 3.2", ">= 3.2.1"
 gem "sassc-embedded"
 
+# Google Cloud
+gem "google-cloud-storage", "~> 1.57", ">= 1.57.1", require: "google/cloud/storage"
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 

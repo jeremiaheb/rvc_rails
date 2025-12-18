@@ -2,16 +2,16 @@ require "test_helper"
 
 class DataFileTest < ActiveSupport::TestCase
   test "#path returns the full path to the file" do
-    assert_equal File.join(Rails.configuration.x.data_file_path, "sample_data/dt2004.csv"), DataFile.new("sample", "DRY TORT", "2004", "csv").path
-    assert_equal File.join(Rails.configuration.x.data_file_path, "sample_data/fk2025.zip"), DataFile.new("sample", "FLA KEYS", "2025", "zip").path
+    assert_equal "sample_data/dt2004.csv", DataFile.new("sample", "DRY TORT", "2004", "csv").path
+    assert_equal "sample_data/fk2025.zip", DataFile.new("sample", "FLA KEYS", "2025", "zip").path
 
     # stratum files are prefixed with ntot_
-    assert_equal File.join(Rails.configuration.x.data_file_path, "stratum_data/ntot_dt2004.csv"), DataFile.new("stratum", "DRY TORT", "2004", "csv").path
-    assert_equal File.join(Rails.configuration.x.data_file_path, "stratum_data/ntot_fk2025.zip"), DataFile.new("stratum", "FLA KEYS", "2025", "zip").path
+    assert_equal "stratum_data/ntot_dt2004.csv", DataFile.new("stratum", "DRY TORT", "2004", "csv").path
+    assert_equal "stratum_data/ntot_fk2025.zip", DataFile.new("stratum", "FLA KEYS", "2025", "zip").path
 
     # benthic files are prefixed with benthic_
-    assert_equal File.join(Rails.configuration.x.data_file_path, "benthic_data/benthic_dt2004.csv"), DataFile.new("benthic", "DRY TORT", "2004", "csv").path
-    assert_equal File.join(Rails.configuration.x.data_file_path, "benthic_data/benthic_fk2025.zip"), DataFile.new("benthic", "FLA KEYS", "2025", "zip").path
+    assert_equal "benthic_data/benthic_dt2004.csv", DataFile.new("benthic", "DRY TORT", "2004", "csv").path
+    assert_equal "benthic_data/benthic_fk2025.zip", DataFile.new("benthic", "FLA KEYS", "2025", "zip").path
   end
 
   test "accepts only valid data types" do
