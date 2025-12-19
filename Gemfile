@@ -52,7 +52,7 @@ group :development do
 
   # Capistrano for deployment to servers
   gem "capistrano", "~> 3.20", require: false
-  gem "capistrano-bundler", "~> 2.1", require: false
+  gem "capistrano-bundler", "~> 2.2", require: false
   gem "capistrano-rails", "~> 1.7", require: false
   gem "capistrano-rbenv", "~> 2.2", require: false
 end
