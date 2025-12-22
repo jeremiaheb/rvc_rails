@@ -211,7 +211,8 @@ GEM
     marcel (1.1.0)
     matrix (0.4.3)
     mini_mime (1.1.5)
-    minitest (5.27.0)
+    minitest (6.0.0)
+      prism (~> 1.5)
     msgpack (1.8.0)
     multi_json (1.18.0)
     net-http (0.9.1)
@@ -433,7 +434,7 @@ DEPENDENCIES
   dartsass-sprockets (~> 3.2, >= 3.2.1)
   debug
   google-cloud-storage (~> 1.57, >= 1.57.1)
-  minitest (~> 5.27, < 6)
+  minitest (~> 6.0)
   pg (~> 1.5, < 1.6)
   puma (>= 5.0)
   rails (= 8.0.4)
