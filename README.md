@@ -148,7 +148,13 @@ Verify the key is available:
 ssh-add -L
 ```
 
-With the key available, run:
+If deploying to Google Cloud, also login to `gcloud`:
+
+```bash
+gcloud auth login
+```
+
+Finally:
 
 ```bash
 bin/cap production deploy
