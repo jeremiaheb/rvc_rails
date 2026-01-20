@@ -57,6 +57,7 @@ class SamplesController < ApplicationController
       { year: 2024, region: "DRY TORT" },
       { year: 2024, region: "FLA KEYS" },
       { year: 2024, region: "SEFCRI" },
+      { year: 2025, region: "STTSTJ" },
     ]
 
     respond_to do |format|
