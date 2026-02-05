@@ -58,6 +58,8 @@ class StrataController < ApplicationController
       { year: 2024, region: "FLA KEYS" },
       { year: 2024, region: "SEFCRI" },
       { year: 2025, region: "STTSTJ" },
+      { year: 2025, region: "STX" },
+      { year: 2025, region: "PRICO" },
     ]
 
     respond_to do |format|
